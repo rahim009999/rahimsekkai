@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support IT & Gestion Utilisateurs | Rahim Sekkai</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e40af;
+            --secondary: #0f172a;
+            --accent: #3b82f6;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1f2937;
+            overflow-x: hidden;
+        }
+        .hero-title {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+        }
+        .section-title {
+            font-size: clamp(1.75rem, 3vw, 2.5rem);
+            font-weight: 800;
+            line-height: 1.2;
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .mobile-menu {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        .language-switcher {
+            position: relative;
+            z-index: 1000;
+        }
+        .whatsapp-button {
+            background-color: #25D366;
+            transition: all 0.3s ease;
+        }
+        .whatsapp-button:hover {
+            background-color: #128C7E;
+            transform: translateY(-2px);
+        }
+        .back-button {
+            transition: all 0.3s ease;
+        }
+        .back-button:hover {
+            transform: translateX(-5px);
+        }
+        .support-card {
+            transition: all 0.3s ease;
+        }
+        .support-card:hover {
+            transform: translateY(-5px);
+        }
+        .ticket-system {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .stat-card {
+            transition: transform 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: scale(1.05);
+        }
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (min-width: 1025px) {
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <header class="sticky top-0 z-40 bg-white shadow-md">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-blue-800">Rahim<span class="text-blue-600">Sekkai</span></a>
+            
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="index.html#home" class="nav-link text-gray-700 font-medium hover:text-blue-700" data-i18n="nav.home">Home</a>
+                <a href="index.html#projects" class="nav-link text-gray-700 font-medium hover:text-blue-700" data-i18n="nav.projects">Projects</a>
+                <a href="index.html#skills" class="nav-link text-gray-700 font-medium hover:text-blue-700" data-i18n="nav.skills">Skills</a>
+                <a href="index.html#about" class="nav-link text-gray-700 font-medium hover:text-blue-700" data-i18n="nav.about">About</a>
+                <a href="index.html#contact" class="nav-link text-gray-700 font-medium hover:text-blue-700" data-i18n="nav.contact">Contact</a>
+                <!-- Two CV buttons -->
+                <a href="/cv/rahim_sekkai_cv_fr.pdf" download class="bg-blue-700 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-800 transition text-sm">CV FR</a>
+                <a href="/cv/rahim_sekkai_cv_en.pdf" download class="bg-blue-700 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-800 transition text-sm">CV EN</a>
+                
+                <!-- Language Switcher -->
+                <div class="language-switcher flex items-center space-x-2">
+                    <button id="lang-en" class="lang-btn px-3 py-1 rounded-full font-medium bg-blue-100 text-blue-700">EN</button>
+                    <button id="lang-fr" class="lang-btn px-3 py-1 rounded-full font-medium text-gray-600 hover:text-blue-700">FR</button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="md:hidden text-gray-700">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </nav>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu md:hidden fixed inset-0 bg-white z-40 p-8">
+            <div class="flex justify-between items-center mb-10">
+                <a href="index.html" class="text-2xl font-bold text-blue-800">Rahim<span class="text-blue-600">Sekkai</span></a>
+                <button id="close-menu-button" class="text-gray-700">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            <div class="flex flex-col space-y-6">
+                <a href="index.html#home" class="text-xl font-medium text-gray-700 hover:text-blue-700 py-2" data-i18n="nav.home">Home</a>
+                <a href="index.html#projects" class="text-xl font-medium text-gray-700 hover:text-blue-700 py-2" data-i18n="nav.projects">Projects</a>
+                <a href="index.html#skills" class="text-xl font-medium text-gray-700 hover:text-blue-700 py-2" data-i18n="nav.skills">Skills</a>
+                <a href="index.html#about" class="text-xl font-medium text-gray-700 hover:text-blue-700 py-2" data-i18n="nav.about">About</a>
+                <a href="index.html#contact" class="text-xl font-medium text-gray-700 hover:text-blue-700 py-2" data-i18n="nav.contact">Contact</a>
+                <!-- Mobile CV buttons -->
+                <div class="flex space-x-4 mt-4">
+                    <a href="/cv/rahim_sekkai_cv_fr.pdf" download class="bg-blue-700 text-white px-5 py-3 rounded-md font-medium text-center hover:bg-blue-800 transition flex-1">CV FR</a>
+                    <a href="/cv/rahim_sekkai_cv_en.pdf" download class="bg-blue-700 text-white px-5 py-3 rounded-md font-medium text-center hover:bg-blue-800 transition flex-1">CV EN</a>
+                </div>
+                <!-- Language Switcher -->
+                <div class="language-switcher flex justify-center space-x-4 mt-4">
+                    <button id="lang-en-mobile" class="lang-btn px-4 py-2 rounded-full font-medium bg-blue-100 text-blue-700">EN</button>
+                    <button id="lang-fr-mobile" class="lang-btn px-4 py-2 rounded-full font-medium text-gray-600 hover:text-blue-700">FR</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Back Button -->
+    <div class="container mx-auto px-4 py-6">
+        <a href="index.html#projects" class="back-button inline-flex items-center text-blue-700 font-medium hover:text-blue-900">
+            <i class="fas fa-arrow-left mr-2"></i>
+            <span data-i18n="project.back">Back to Projects</span>
+        </a>
+    </div>
+
+    <!-- Project Hero -->
+    <section class="py-12 md:py-16 bg-gradient-to-r from-purple-900 to-pink-700 text-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <span class="inline-block bg-purple-500 text-white text-sm font-bold px-4 py-1 rounded-full mb-4" data-i18n="projects.project4.tag">IT SUPPORT</span>
+                <h1 class="hero-title mb-6" data-i18n="projects.project4.title">IT Support & User Management</h1>
+                <p class="text-xl md:text-2xl text-purple-100 mb-8 max-w-3xl" data-i18n="projects.project4.description">
+                    Daily user management and technical support for field technician/N1-N2 positions.
+                </p>
+                <div class="flex flex-wrap gap-3 mb-8">
+                    <span class="bg-purple-800 text-white text-sm px-4 py-2 rounded-full">Active Directory</span>
+                    <span class="bg-purple-800 text-white text-sm px-4 py-2 rounded-full">Remote Support</span>
+                    <span class="bg-purple-800 text-white text-sm px-4 py-2 rounded-full">Troubleshooting</span>
+                    <span class="bg-purple-800 text-white text-sm px-4 py-2 rounded-full">Documentation</span>
+                    <span class="bg-purple-800 text-white text-sm px-4 py-2 rounded-full">Ticket System</span>
+                </div>
+                <div class="text-sm text-purple-200">
+                    <span data-i18n="project.duration">Duration:</span> 2 years | <span data-i18n="project.status">Status:</span> <span data-i18n="project.completed">Completed</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support Statistics -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="ticket-system p-8 text-white mb-8">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+                        <div>
+                            <h2 class="text-2xl font-bold mb-2" data-i18n="project4.ticket_system">IT Support Dashboard</h2>
+                            <p class="text-purple-200" data-i18n="project4.ticket_desc">Managed 2000+ support tickets for many users</p>
+                        </div>
+                        <div class="flex items-center space-x-4 mt-4 md:mt-0">
+                            <div class="text-center">
+                                <div class="text-3xl font-bold">98%</div>
+                                <div class="text-sm" data-i18n="project4.resolution">Resolution Rate</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold">4.8/5</div>
+                                <div class="text-sm" data-i18n="project4.satisfaction">Satisfaction</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Stats Grid -->
+                <div class="stats-grid grid gap-6">
+                    <div class="stat-card bg-blue-50 rounded-xl p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-users text-blue-600"></i>
+                            </div>
+                            <span class="text-2xl font-bold text-gray-900">50+</span>
+                        </div>
+                        <h4 class="font-bold text-gray-900 mb-1" data-i18n="project4.users_managed">Users Managed</h4>
+                        <p class="text-sm text-gray-600" data-i18n="project4.users_desc">Active Directory accounts</p>
+                    </div>
+                    
+                    <div class="stat-card bg-green-50 rounded-xl p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-ticket-alt text-green-600"></i>
+                            </div>
+                            <span class="text-2xl font-bold text-gray-900">2000+</span>
+                        </div>
+                        <h4 class="font-bold text-gray-900 mb-1" data-i18n="project4.tickets">Tickets Resolved</h4>
+                        <p class="text-sm text-gray-600" data-i18n="project4.tickets_desc">Support requests handled</p>
+                    </div>
+                    
+                    <div class="stat-card bg-purple-50 rounded-xl p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-clock text-purple-600"></i>
+                            </div>
+                            <span class="text-2xl font-bold text-gray-900">15min</span>
+                        </div>
+                        <h4 class="font-bold text-gray-900 mb-1" data-i18n="project4.response">Avg Response Time</h4>
+                        <p class="text-sm text-gray-600" data-i18n="project4.response_desc">Initial contact</p>
+                    </div>
+                    
+                    <div class="stat-card bg-red-50 rounded-xl p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-laptop-medical text-red-600"></i>
+                            </div>
+                            <span class="text-2xl font-bold text-gray-900">200+</span>
+                        </div>
+                        <h4 class="font-bold text-gray-900 mb-1" data-i18n="project4.devices">Devices Supported</h4>
+                        <p class="text-sm text-gray-600" data-i18n="project4.devices_desc">Computers & peripherals</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="grid lg:grid-cols-3 gap-12">
+                    <!-- Main Content -->
+                    <div class="lg:col-span-2">
+                        <!-- Overview -->
+                        <div class="mb-12">
+                            <h2 class="section-title text-gray-900 mb-6" data-i18n="project.overview">Project Overview</h2>
+                            <p class="text-gray-700 mb-6" data-i18n="project4.overview1">
+                                Provided comprehensive IT support and user management services for a medium-sized organization with multiple employees across various departments.
+                            </p>
+                            <p class="text-gray-700" data-i18n="project4.overview2">
+                                Responsibilities included Active Directory management, hardware/software troubleshooting, remote support, and maintaining detailed technical documentation.
+                            </p>
+                        </div>
+
+                        <!-- Support Services -->
+                        <div class="mb-12">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-6" data-i18n="project4.services">Support Services Provided</h3>
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div class="support-card bg-gray-50 rounded-xl p-6">
+                                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                                        <i class="fas fa-user-cog text-blue-600 text-xl"></i>
+                                    </div>
+                                    <h4 class="font-bold text-gray-900 mb-2" data-i18n="project4.ad_management">AD Management</h4>
+                                    <ul class="text-sm text-gray-600 space-y-1">
+                                        <li>• User creation/deletion</li>
+                                        <li>• Group policy management</li>
+                                        <li>• Password reset/reset</li>
+                                        <li>• Permission management</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="support-card bg-gray-50 rounded-xl p-6">
+                                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                                        <i class="fas fa-desktop text-green-600 text-xl"></i>
+                                    </div>
+                                    <h4 class="font-bold text-gray-900 mb-2" data-i18n="project4.remote_support">Remote Support</h4>
+                                    <ul class="text-sm text-gray-600 space-y-1">
+                                        <li>• TeamViewer/AnyDesk</li>
+                                        <li>• Remote troubleshooting</li>
+                                        <li>• Software installation</li>
+                                        <li>• Configuration updates</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="support-card bg-gray-50 rounded-xl p-6">
+                                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                                        <i class="fas fa-tools text-purple-600 text-xl"></i>
+                                    </div>
+                                    <h4 class="font-bold text-gray-900 mb-2" data-i18n="project4.troubleshooting">Troubleshooting</h4>
+                                    <ul class="text-sm text-gray-600 space-y-1">
+                                        <li>• Hardware diagnostics</li>
+                                        <li>• Software conflicts</li>
+                                        <li>• Network connectivity</li>
+                                        <li>• Printer issues</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="support-card bg-gray-50 rounded-xl p-6">
+                                    <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+                                        <i class="fas fa-file-alt text-red-600 text-xl"></i>
+                                    </div>
+                                    <h4 class="font-bold text-gray-900 mb-2" data-i18n="project4.documentation">Documentation</h4>
+                                    <ul class="text-sm text-gray-600 space-y-1">
+                                        <li>• Knowledge base</li>
+                                        <li>• Procedure guides</li>
+                                        <li>• Configuration docs</li>
+                                        <li>• Training materials</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ticket Management Process -->
+                        <div class="mb-12">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-6" data-i18n="project4.ticket_process">Ticket Management Process</h3>
+                            <div class="space-y-6">
+                                <div class="flex items-start">
+                                    <div class="w-8 h-8 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center mr-4 flex-shrink-0">1</div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-900 mb-1" data-i18n="project4.step1">Ticket Creation</h4>
+                                        <p class="text-gray-600" data-i18n="project4.step1_desc">Users submit tickets via email, phone, or web portal with issue details and priority level.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="w-8 h-8 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center mr-4 flex-shrink-0">2</div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-900 mb-1" data-i18n="project4.step2">Triage & Assignment</h4>
+                                        <p class="text-gray-600" data-i18n="project4.step2_desc">Tickets are categorized, prioritized, and assigned to appropriate support technicians.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="w-8 h-8 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center mr-4 flex-shrink-0">3</div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-900 mb-1" data-i18n="project4.step3">Resolution</h4>
+                                        <p class="text-gray-600" data-i18n="project4.step3_desc">Technicians diagnose issues, implement solutions, and update ticket status.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="w-8 h-8 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center mr-4 flex-shrink-0">4</div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-900 mb-1" data-i18n="project4.step4">Follow-up</h4>
+                                        <p class="text-gray-600" data-i18n="project4.step4_desc">Users are contacted for confirmation, tickets are documented, and knowledge base is updated.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Common Issues Resolved -->
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-6" data-i18n="project4.common_issues">Common Issues Resolved</h3>
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div class="bg-gray-50 rounded-lg p-4">
+                                    <div class="flex items-center mb-2">
+                                        <i class="fas fa-key text-blue-600 mr-2"></i>
+                                        <span class="font-medium" data-i18n="project4.issue1">Password Resets</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600" data-i18n="project4.issue1_desc">Average resolution time: 5 minutes</p>
+                                </div>
+                                <div class="bg-gray-50 rounded-lg p-4">
+                                    <div class="flex items-center mb-2">
+                                        <i class="fas fa-wifi text-green-600 mr-2"></i>
+                                        <span class="font-medium" data-i18n="project4.issue2">Network Connectivity</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600" data-i18n="project4.issue2_desc">Average resolution time: 15 minutes</p>
+                                </div>
+                                <div class="bg-gray-50 rounded-lg p-4">
+                                    <div class="flex items-center mb-2">
+                                        <i class="fas fa-print text-purple-600 mr-2"></i>
+                                        <span class="font-medium" data-i18n="project4.issue3">Printer Issues</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600" data-i18n="project4.issue3_desc">Average resolution time: 20 minutes</p>
+                                </div>
+                                <div class="bg-gray-50 rounded-lg p-4">
+                                    <div class="flex items-center mb-2">
+                                        <i class="fas fa-software text-red-600 mr-2"></i>
+                                        <span class="font-medium" data-i18n="project4.issue4">Software Installation</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600" data-i18n="project4.issue4_desc">Average resolution time: 30 minutes</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar -->
+                    <div class="space-y-8">
+                        <!-- Skills Demonstrated -->
+                        <div class="bg-purple-50 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-bold text-gray-900 mb-4" data-i18n="project.skills">Skills Demonstrated</h3>
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span data-i18n="projects.project4.skill1">AD user creation/deletion and management</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span data-i18n="projects.project4.skill2">Password reset and account unlocking</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span data-i18n="projects.project4.skill3">Remote control and assistance</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span data-i18n="projects.project4.skill4">Hardware/software troubleshooting</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Tools Used -->
+                        <div class="bg-blue-50 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-bold text-gray-900 mb-4" data-i18n="project4.tools">Tools & Technologies</h3>
+                            <ul class="space-y-2">
+                                <li class="flex items-center">
+                                    <i class="fas fa-server text-blue-600 mr-3"></i>
+                                    <span>Active Directory Users & Computers</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-laptop text-green-600 mr-3"></i>
+                                    <span>TeamViewer / AnyDesk</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-ticket-alt text-purple-600 mr-3"></i>
+                                    <span>ServiceNow / Jira Service Desk</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-file-word text-red-600 mr-3"></i>
+                                    <span>Microsoft Office 365 Admin</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-network-wired text-orange-600 mr-3"></i>
+                                    <span>Network diagnostic tools</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Documentation -->
+                        <div class="bg-green-50 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-bold text-gray-900 mb-4" data-i18n="project4.docs">Documentation Created</h3>
+                            <ul class="space-y-2">
+                                <li class="flex items-center text-sm">
+                                    <i class="fas fa-file-pdf text-red-600 mr-2"></i>
+                                    <span data-i18n="project4.doc1">User onboarding checklist</span>
+                                </li>
+                                <li class="flex items-center text-sm">
+                                    <i class="fas fa-file-pdf text-red-600 mr-2"></i>
+                                    <span data-i18n="project4.doc2">Password reset procedure</span>
+                                </li>
+                                <li class="flex items-center text-sm">
+                                    <i class="fas fa-file-pdf text-red-600 mr-2"></i>
+                                    <span data-i18n="project4.doc3">Common issue solutions</span>
+                                </li>
+                                <li class="flex items-center text-sm">
+                                    <i class="fas fa-file-pdf text-red-600 mr-2"></i>
+                                    <span data-i18n="project4.doc4">Remote support guide</span>
+                                </li>
+                                <li class="flex items-center text-sm">
+                                    <i class="fas fa-file-pdf text-red-600 mr-2"></i>
+                                    <span data-i18n="project4.doc5">Hardware setup instructions</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Training -->
+                        <div class="bg-yellow-50 rounded-xl p-6">
+                            <h3 class="text-xl font-bold text-gray-900 mb-4" data-i18n="project4.training">User Training</h3>
+                            <ul class="space-y-2">
+                                <li class="flex items-center text-sm">
+                                    <i class="fas fa-chalkboard-teacher text-yellow-600 mr-2"></i>
+                                    <span data-i18n="project4.training1">New employee orientation</span>
+                                </li>
+                                <li class="flex items-center text-sm">
+                                    <i class="fas fa-chalkboard-teacher text-yellow-600 mr-2"></i>
+                                    <span data-i18n="project4.training2">Password security best practices</span>
+                                </li>
+                                <li class="flex items-center text-sm">
+                                    <i class="fas fa-chalkboard-teacher text-yellow-600 mr-2"></i>
+                                    <span data-i18n="project4.training3">Remote work setup guidance</span>
+                                </li>
+                                <li class="flex items-center text-sm">
+                                    <i class="fas fa-chalkboard-teacher text-yellow-600 mr-2"></i>
+                                    <span data-i18n="project4.training4">Software usage tutorials</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Knowledge Base -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="section-title text-center text-gray-900 mb-12" data-i18n="project4.knowledge">Knowledge Base Contributions</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-question-circle text-blue-600 text-2xl"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-900 mb-2" data-i18n="project4.faq">FAQ Articles</h4>
+                        <p class="text-sm text-gray-600" data-i18n="project4.faq_count">50+ articles created</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-wrench text-green-600 text-2xl"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-900 mb-2" data-i18n="project4.troubleshooting2">Troubleshooting Guides</h4>
+                        <p class="text-sm text-gray-600" data-i18n="project4.guide_count">30+ step-by-step guides</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-video text-purple-600 text-2xl"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-900 mb-2" data-i18n="project4.video">Video Tutorials</h4>
+                        <p class="text-sm text-gray-600" data-i18n="project4.video_count">15+ training videos</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-chart-line text-red-600 text-2xl"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-900 mb-2" data-i18n="project4.analytics">Usage Analytics</h4>
+                        <p class="text-sm text-gray-600" data-i18n="project4.analytics_desc">Most common issues tracked</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section class="py-16 bg-gradient-to-r from-purple-900 to-pink-700 text-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="section-title mb-6" data-i18n="project4.need_support">Need Reliable IT Support?</h2>
+                <p class="text-xl text-purple-100 mb-8" data-i18n="project4.contact_cta">
+                    Ensure smooth business operations with professional IT support and user management services tailored to your organization's needs.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="index.html#contact" class="bg-white text-purple-800 px-8 py-3 rounded-md font-bold text-lg hover:bg-purple-50 transition" data-i18n="project.contact_me">Contact Me</a>
+                    <a href="projet-monitoring-systemes.html" class="border-2 border-white text-white px-8 py-3 rounded-md font-bold text-lg hover:bg-white/10 transition">
+                        <i class="fas fa-arrow-left mr-2"></i> <span data-i18n="project.previous">Previous Project</span>
+                    </a>
+                    <a href="index.html#projects" class="border-2 border-white text-white px-8 py-3 rounded-md font-bold text-lg hover:bg-white/10 transition">
+                        <span data-i18n="project.back_to_all">Back to All Projects</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-8 md:mb-0">
+                    <a href="index.html" class="text-2xl font-bold text-white">Rahim<span class="text-blue-400">Sekkai</span></a>
+                    <p class="mt-2 text-gray-400" data-i18n="footer.tagline">Network & Systems Technician</p>
+                </div>
+                <div class="flex space-x-6 mb-8 md:mb-0">
+                    <a href="mailto:contact@rahimsekkai.com" class="text-gray-400 hover:text-white text-xl">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <a href="https://wa.me/14181234567" target="_blank" class="text-gray-400 hover:text-white text-xl">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+                <div class="text-center md:text-right">
+                    <p class="text-gray-400">© 2026 Rahim Sekkai. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Translation Data -->
+    <script>
+        const translations = {
+            en: {
+                // Navigation
+                "nav.home": "Home",
+                "nav.projects": "Projects",
+                "nav.skills": "Skills",
+                "nav.about": "About",
+                "nav.contact": "Contact",
+                
+                // Project Specific
+                "project.back": "Back to Projects",
+                "project.back_to_all": "Back to All Projects",
+                "project.duration": "Duration",
+                "project.status": "Status",
+                "project.completed": "Completed",
+                "project.overview": "Project Overview",
+                "project.skills": "Skills Demonstrated",
+                "project.contact_me": "Contact Me",
+                "project.previous": "Previous Project",
+                
+                // Project 4 Specific
+                "projects.project4.tag": "IT SUPPORT",
+                "projects.project4.title": "IT Support & User Management",
+                "projects.project4.description": "Daily user management and technical support for field technician/N1-N2 positions.",
+                "projects.project4.skill1": "AD user creation/deletion and management",
+                "projects.project4.skill2": "Password reset and account unlocking",
+                "projects.project4.skill3": "Remote control and assistance",
+                "projects.project4.skill4": "Hardware/software troubleshooting",
+                
+                "project4.ticket_system": "IT Support Dashboard",
+                "project4.ticket_desc": "Managed 2000+ support tickets for many users",
+                "project4.resolution": "Resolution Rate",
+                "project4.satisfaction": "Satisfaction",
+                
+                "project4.users_managed": "Users Managed",
+                "project4.users_desc": "Active Directory accounts",
+                "project4.tickets": "Tickets Resolved",
+                "project4.tickets_desc": "Support requests handled",
+                "project4.response": "Avg Response Time",
+                "project4.response_desc": "Initial contact",
+                "project4.devices": "Devices Supported",
+                "project4.devices_desc": "Computers & peripherals",
+                
+                "project4.overview1": "Provided comprehensive IT support and user management services for a medium-sized organization with multiple employees across various departments.",
+                "project4.overview2": "Responsibilities included Active Directory management, hardware/software troubleshooting, remote support, and maintaining detailed technical documentation.",
+                
+                "project4.services": "Support Services Provided",
+                "project4.ad_management": "AD Management",
+                "project4.remote_support": "Remote Support",
+                "project4.troubleshooting": "Troubleshooting",
+                "project4.documentation": "Documentation",
+                
+                "project4.ticket_process": "Ticket Management Process",
+                "project4.step1": "Ticket Creation",
+                "project4.step1_desc": "Users submit tickets via email, phone, or web portal with issue details and priority level.",
+                "project4.step2": "Triage & Assignment",
+                "project4.step2_desc": "Tickets are categorized, prioritized, and assigned to appropriate support technicians.",
+                "project4.step3": "Resolution",
+                "project4.step3_desc": "Technicians diagnose issues, implement solutions, and update ticket status.",
+                "project4.step4": "Follow-up",
+                "project4.step4_desc": "Users are contacted for confirmation, tickets are documented, and knowledge base is updated.",
+                
+                "project4.common_issues": "Common Issues Resolved",
+                "project4.issue1": "Password Resets",
+                "project4.issue1_desc": "Average resolution time: 5 minutes",
+                "project4.issue2": "Network Connectivity",
+                "project4.issue2_desc": "Average resolution time: 15 minutes",
+                "project4.issue3": "Printer Issues",
+                "project4.issue3_desc": "Average resolution time: 20 minutes",
+                "project4.issue4": "Software Installation",
+                "project4.issue4_desc": "Average resolution time: 30 minutes",
+                
+                "project4.tools": "Tools & Technologies",
+                "project4.docs": "Documentation Created",
+                "project4.doc1": "User onboarding checklist",
+                "project4.doc2": "Password reset procedure",
+                "project4.doc3": "Common issue solutions",
+                "project4.doc4": "Remote support guide",
+                "project4.doc5": "Hardware setup instructions",
+                
+                "project4.training": "User Training",
+                "project4.training1": "New employee orientation",
+                "project4.training2": "Password security best practices",
+                "project4.training3": "Remote work setup guidance",
+                "project4.training4": "Software usage tutorials",
+                
+                "project4.knowledge": "Knowledge Base Contributions",
+                "project4.faq": "FAQ Articles",
+                "project4.faq_count": "50+ articles created",
+                "project4.troubleshooting2": "Troubleshooting Guides",
+                "project4.guide_count": "30+ step-by-step guides",
+                "project4.video": "Video Tutorials",
+                "project4.video_count": "15+ training videos",
+                "project4.analytics": "Usage Analytics",
+                "project4.analytics_desc": "Most common issues tracked",
+                
+                "project4.need_support": "Need Reliable IT Support?",
+                "project4.contact_cta": "Ensure smooth business operations with professional IT support and user management services tailored to your organization's needs.",
+                
+                // Footer
+                "footer.tagline": "Network & Systems Technician"
+            },
+            fr: {
+                // Navigation
+                "nav.home": "Accueil",
+                "nav.projects": "Projets",
+                "nav.skills": "Compétences",
+                "nav.about": "À Propos",
+                "nav.contact": "Contact",
+                
+                // Project Specific
+                "project.back": "Retour aux Projets",
+                "project.back_to_all": "Retour à Tous les Projets",
+                "project.duration": "Durée",
+                "project.status": "Statut",
+                "project.completed": "Terminé",
+                "project.overview": "Aperçu du Projet",
+                "project.skills": "Compétences Démonstrées",
+                "project.contact_me": "Me Contacter",
+                "project.previous": "Projet Précédent",
+                
+                // Project 4 Specific
+                "projects.project4.tag": "SUPPORT IT",
+                "projects.project4.title": "Support IT & Gestion Utilisateurs",
+                "projects.project4.description": "Gestion quotidienne des utilisateurs et support technique pour postes technicien terrain/N1-N2.",
+                "projects.project4.skill1": "Création/suppression utilisateurs AD et gestion",
+                "projects.project4.skill2": "Réinitialisation mots de passe et déverrouillage comptes",
+                "projects.project4.skill3": "Contrôle à distance et assistance",
+                "projects.project4.skill4": "Dépannage matériel/logiciel",
+                
+                "project4.ticket_system": "Tableau de bord Support IT",
+                "project4.ticket_desc": "Gestion de 2000+ tickets de support pour de nombreux utilisateurs",
+                "project4.resolution": "Taux de Résolution",
+                "project4.satisfaction": "Satisfaction",
+                
+                "project4.users_managed": "Utilisateurs Gérés",
+                "project4.users_desc": "Comptes Active Directory",
+                "project4.tickets": "Tickets Résolus",
+                "project4.tickets_desc": "Demandes support traitées",
+                "project4.response": "Temps Réponse Moyen",
+                "project4.response_desc": "Premier contact",
+                "project4.devices": "Appareils Supportés",
+                "project4.devices_desc": "Ordinateurs & périphériques",
+                
+                "project4.overview1": "Fourniture de services complets de support IT et de gestion des utilisateurs pour une organisation de taille moyenne avec de nombreux employés dans différents départements.",
+                "project4.overview2": "Responsabilités incluant la gestion Active Directory, le dépannage matériel/logiciel, le support à distance et le maintien d'une documentation technique détaillée.",
+                
+                "project4.services": "Services de Support Fournis",
+                "project4.ad_management": "Gestion AD",
+                "project4.remote_support": "Support à Distance",
+                "project4.troubleshooting": "Dépannage",
+                "project4.documentation": "Documentation",
+                
+                "project4.ticket_process": "Processus Gestion Tickets",
+                "project4.step1": "Création Ticket",
+                "project4.step1_desc": "Les utilisateurs soumettent des tickets par email, téléphone ou portail web avec détails du problème et niveau de priorité.",
+                "project4.step2": "Tri & Attribution",
+                "project4.step2_desc": "Les tickets sont catégorisés, priorisés et attribués aux techniciens support appropriés.",
+                "project4.step3": "Résolution",
+                "project4.step3_desc": "Les techniciens diagnostiquent les problèmes, implémentent des solutions et mettent à jour le statut des tickets.",
+                "project4.step4": "Suivi",
+                "project4.step4_desc": "Les utilisateurs sont contactés pour confirmation, les tickets sont documentés et la base de connaissances est mise à jour.",
+                
+                "project4.common_issues": "Problèmes Courants Résolus",
+                "project4.issue1": "Réinitialisation Mots de Passe",
+                "project4.issue1_desc": "Temps résolution moyen: 5 minutes",
+                "project4.issue2": "Connectivité Réseau",
+                "project4.issue2_desc": "Temps résolution moyen: 15 minutes",
+                "project4.issue3": "Problèmes Imprimante",
+                "project4.issue3_desc": "Temps résolution moyen: 20 minutes",
+                "project4.issue4": "Installation Logiciel",
+                "project4.issue4_desc": "Temps résolution moyen: 30 minutes",
+                
+                "project4.tools": "Outils & Technologies",
+                "project4.docs": "Documentation Créée",
+                "project4.doc1": "Checklist intégration utilisateur",
+                "project4.doc2": "Procédure réinitialisation mot de passe",
+                "project4.doc3": "Solutions problèmes courants",
+                "project4.doc4": "Guide support à distance",
+                "project4.doc5": "Instructions installation matériel",
+                
+                "project4.training": "Formation Utilisateurs",
+                "project4.training1": "Orientation nouveaux employés",
+                "project4.training2": "Bonnes pratiques sécurité mots de passe",
+                "project4.training3": "Guide configuration travail à distance",
+                "project4.training4": "Tutoriels utilisation logiciel",
+                
+                "project4.knowledge": "Contributions Base de Connaissances",
+                "project4.faq": "Articles FAQ",
+                "project4.faq_count": "50+ articles créés",
+                "project4.troubleshooting2": "Guides Dépannage",
+                "project4.guide_count": "30+ guides étape par étape",
+                "project4.video": "Tutoriels Vidéo",
+                "project4.video_count": "15+ vidéos formation",
+                "project4.analytics": "Analytics Utilisation",
+                "project4.analytics_desc": "Problèmes les plus courants suivis",
+                
+                "project4.need_support": "Besoin de Support IT Fiable?",
+                "project4.contact_cta": "Assurez des opérations commerciales fluides avec des services professionnels de support IT et de gestion des utilisateurs adaptés aux besoins de votre organisation.",
+                
+                // Footer
+                "footer.tagline": "Technicien Réseau & Systèmes"
+            }
+        };
+    </script>
+
+    <script>
+        // Set default language to English
+        let currentLang = 'en';
+        
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const closeMenuButton = document.getElementById('close-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.querySelectorAll('#mobile-menu a');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+        
+        // Language switcher functionality
+        function setLanguage(lang) {
+            currentLang = lang;
+            
+            // Update active button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('bg-blue-100', 'text-blue-700');
+                btn.classList.add('text-gray-600', 'hover:text-blue-700');
+            });
+            
+            if (lang === 'en') {
+                document.getElementById('lang-en').classList.add('bg-blue-100', 'text-blue-700');
+                document.getElementById('lang-en').classList.remove('text-gray-600', 'hover:text-blue-700');
+                document.getElementById('lang-en-mobile').classList.add('bg-blue-100', 'text-blue-700');
+                document.getElementById('lang-en-mobile').classList.remove('text-gray-600', 'hover:text-blue-700');
+            } else {
+                document.getElementById('lang-fr').classList.add('bg-blue-100', 'text-blue-700');
+                document.getElementById('lang-fr').classList.remove('text-gray-600', 'hover:text-blue-700');
+                document.getElementById('lang-fr-mobile').classList.add('bg-blue-100', 'text-blue-700');
+                document.getElementById('lang-fr-mobile').classList.remove('text-gray-600', 'hover:text-blue-700');
+            }
+            
+            // Update all elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            
+            // Update page title
+            document.title = lang === 'en' 
+                ? 'IT Support & User Management | Rahim Sekkai'
+                : 'Support IT & Gestion Utilisateurs | Rahim Sekkai';
+            
+            // Save language preference to localStorage
+            localStorage.setItem('preferredLang', lang);
+        }
+        
+        // Initialize language from localStorage or default to English
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('preferredLang') || 'en';
+            setLanguage(savedLang);
+            
+            // Add click events to language buttons
+            document.getElementById('lang-en').addEventListener('click', () => setLanguage('en'));
+            document.getElementById('lang-fr').addEventListener('click', () => setLanguage('fr'));
+            document.getElementById('lang-en-mobile').addEventListener('click', () => {
+                setLanguage('en');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            document.getElementById('lang-fr-mobile').addEventListener('click', () => {
+                setLanguage('fr');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+    </script>
+</body>
+</html>

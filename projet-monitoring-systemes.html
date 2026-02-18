@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supervision & Maintenance Systèmes | Rahim Sekkai</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e40af;
+            --secondary: #0f172a;
+            --accent: #3b82f6;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1f2937;
+            overflow-x: hidden;
+        }
+        .hero-title {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+        }
+        .section-title {
+            font-size: clamp(1.75rem, 3vw, 2.5rem);
+            font-weight: 800;
+            line-height: 1.2;
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .mobile-menu {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        .language-switcher {
+            position: relative;
+            z-index: 1000;
+        }
+        .whatsapp-button {
+            background-color: #25D366;
+            transition: all 0.3s ease;
+        }
+        .whatsapp-button:hover {
+            background-color: #128C7E;
+            transform: translateY(-2px);
+        }
+        .back-button {
+            transition: all 0.3s ease;
+        }
+        .back-button:hover {
+            transform: translateX(-5px);
+        }
+        .feature-card {
+            transition: transform 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        .screenshot-placeholder {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        @media (max-width: 768px) {
+            .config-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (min-width: 769px) {
+            .config-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <header class="sticky top-0 z-40 bg-white shadow-md">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-blue-800">Rahim<span class="text-blue-600">Sekkai</span></a>
+            
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="index.html#home" class="nav-link text-gray-700 font-medium hover:text-blue-700" data-i18n="nav.home">Home</a>
+                <a href="index.html#projects" class="nav-link text-gray-700 font-medium hover:text-blue-700" data-i18n="nav.projects">Projects</a>
+                <a href="index.html#skills" class="nav-link text-gray-700 font-medium hover:text-blue-700" data-i18n="nav.skills">Skills</a>
+                <a href="index.html#about" class="nav-link text-gray-700 font-medium hover:text-blue-700" data-i18n="nav.about">About</a>
+                <a href="index.html#contact" class="nav-link text-gray-700 font-medium hover:text-blue-700" data-i18n="nav.contact">Contact</a>
+                <!-- Two CV buttons -->
+                <a href="/cv/rahim_sekkai_cv_fr.pdf" download class="bg-blue-700 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-800 transition text-sm">CV FR</a>
+                <a href="/cv/rahim_sekkai_cv_en.pdf" download class="bg-blue-700 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-800 transition text-sm">CV EN</a>
+                
+                <!-- Language Switcher -->
+                <div class="language-switcher flex items-center space-x-2">
+                    <button id="lang-en" class="lang-btn px-3 py-1 rounded-full font-medium bg-blue-100 text-blue-700">EN</button>
+                    <button id="lang-fr" class="lang-btn px-3 py-1 rounded-full font-medium text-gray-600 hover:text-blue-700">FR</button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="md:hidden text-gray-700">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </nav>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu md:hidden fixed inset-0 bg-white z-40 p-8">
+            <div class="flex justify-between items-center mb-10">
+                <a href="index.html" class="text-2xl font-bold text-blue-800">Rahim<span class="text-blue-600">Sekkai</span></a>
+                <button id="close-menu-button" class="text-gray-700">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            <div class="flex flex-col space-y-6">
+                <a href="index.html#home" class="text-xl font-medium text-gray-700 hover:text-blue-700 py-2" data-i18n="nav.home">Home</a>
+                <a href="index.html#projects" class="text-xl font-medium text-gray-700 hover:text-blue-700 py-2" data-i18n="nav.projects">Projects</a>
+                <a href="index.html#skills" class="text-xl font-medium text-gray-700 hover:text-blue-700 py-2" data-i18n="nav.skills">Skills</a>
+                <a href="index.html#about" class="text-xl font-medium text-gray-700 hover:text-blue-700 py-2" data-i18n="nav.about">About</a>
+                <a href="index.html#contact" class="text-xl font-medium text-gray-700 hover:text-blue-700 py-2" data-i18n="nav.contact">Contact</a>
+                <!-- Mobile CV buttons -->
+                <div class="flex space-x-4 mt-4">
+                    <a href="/cv/rahim_sekkai_cv_fr.pdf" download class="bg-blue-700 text-white px-5 py-3 rounded-md font-medium text-center hover:bg-blue-800 transition flex-1">CV FR</a>
+                    <a href="/cv/rahim_sekkai_cv_en.pdf" download class="bg-blue-700 text-white px-5 py-3 rounded-md font-medium text-center hover:bg-blue-800 transition flex-1">CV EN</a>
+                </div>
+                <!-- Language Switcher -->
+                <div class="language-switcher flex justify-center space-x-4 mt-4">
+                    <button id="lang-en-mobile" class="lang-btn px-4 py-2 rounded-full font-medium bg-blue-100 text-blue-700">EN</button>
+                    <button id="lang-fr-mobile" class="lang-btn px-4 py-2 rounded-full font-medium text-gray-600 hover:text-blue-700">FR</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Back Button -->
+    <div class="container mx-auto px-4 py-6">
+        <a href="index.html#projects" class="back-button inline-flex items-center text-blue-700 font-medium hover:text-blue-900">
+            <i class="fas fa-arrow-left mr-2"></i>
+            <span data-i18n="project.back">Back to Projects</span>
+        </a>
+    </div>
+
+    <!-- Project Hero -->
+    <section class="py-12 md:py-16 bg-gradient-to-r from-blue-900 to-indigo-700 text-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <span class="inline-block bg-blue-500 text-white text-sm font-bold px-4 py-1 rounded-full mb-4" data-i18n="projects.project3.tag">MONITORING</span>
+                <h1 class="hero-title mb-6" data-i18n="projects.project3.title">System Monitoring & Maintenance</h1>
+                <p class="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl" data-i18n="projects.project3.description">
+                    Proactive monitoring of servers and network equipment to prevent failures.
+                </p>
+                <div class="flex flex-wrap gap-3 mb-8">
+                    <span class="bg-blue-800 text-white text-sm px-4 py-2 rounded-full">Zabbix/Wazuh</span>
+                    <span class="bg-blue-800 text-white text-sm px-4 py-2 rounded-full">Windows/Linux</span>
+                    <span class="bg-blue-800 text-white text-sm px-4 py-2 rounded-full">SNMP</span>
+                    <span class="bg-blue-800 text-white text-sm px-4 py-2 rounded-full">Alerting</span>
+                    <span class="bg-blue-800 text-white text-sm px-4 py-2 rounded-full">SIEM</span>
+                </div>
+                <div class="text-sm text-blue-200">
+                    <span data-i18n="project.duration">Duration:</span> 4 months | <span data-i18n="project.status">Status:</span> <span data-i18n="project.completed">Completed</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Overview -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="grid lg:grid-cols-3 gap-12">
+                    <!-- Main Content -->
+                    <div class="lg:col-span-2">
+                        <h2 class="section-title text-gray-900 mb-8" data-i18n="project.overview">Project Overview</h2>
+                        
+                        <div class="mb-10">
+                            <h3 class="text-xl font-bold text-gray-900 mb-4" data-i18n="project.context">Context & Challenge</h3>
+                            <p class="text-gray-700 mb-4" data-i18n="project3.context1">
+                                The company lacked visibility into its IT infrastructure, leading to unexpected downtimes and delayed responses to issues. There was no centralized monitoring system.
+                            </p>
+                            <p class="text-gray-700" data-i18n="project3.context2">
+                                The goal was to implement a comprehensive monitoring solution that would provide real-time alerts, historical data for analysis, and proactive maintenance capabilities.
+                            </p>
+                        </div>
+                        
+                        <div class="mb-10">
+                            <h3 class="text-xl font-bold text-gray-900 mb-4" data-i18n="project.solution">Solution Implemented</h3>
+                            <ul class="space-y-4">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                    <span data-i18n="project3.solution1">Deployed Wazuh SIEM on Ubuntu Server for security monitoring and log analysis</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                    <span data-i18n="project3.solution2">Configured Zabbix for infrastructure monitoring (servers, switches, firewalls)</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                    <span data-i18n="project3.solution3">Implemented SNMP monitoring on network devices</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                    <span data-i18n="project3.solution4">Set up alerting and notification rules for critical events</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                    <span data-i18n="project3.solution5">Created dashboards for real-time visualization of system health</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Screenshots Section with image placeholders -->
+                        <div class="mb-10">
+                            <h3 class="text-xl font-bold text-gray-900 mb-6" data-i18n="project.screenshots">Monitoring Dashboards</h3>
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div class="screenshot-placeholder shadow-lg">
+                                    <div class="h-48 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                                        <i class="fas fa-chart-line text-white text-5xl"></i>
+                                    </div>
+                                    <div class="bg-white p-4">
+                                        <p class="font-bold text-gray-900" data-i18n="project3.screen1">Wazuh SIEM Dashboard</p>
+                                        <p class="text-sm text-gray-600" data-i18n="project3.screen1_desc">Real-time security event monitoring and alerting</p>
+                                        <!-- Replace the div above with an <img> tag once you have actual screenshots -->
+                                        <!-- <img src="/images/wazuh-dashboard.png" alt="Wazuh Dashboard" class="w-full"> -->
+                                    </div>
+                                </div>
+                                <div class="screenshot-placeholder shadow-lg">
+                                    <div class="h-48 bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center">
+                                        <i class="fas fa-server text-white text-5xl"></i>
+                                    </div>
+                                    <div class="bg-white p-4">
+                                        <p class="font-bold text-gray-900" data-i18n="project3.screen2">Zabbix Infrastructure Overview</p>
+                                        <p class="text-sm text-gray-600" data-i18n="project3.screen2_desc">Server and network device health metrics</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar -->
+                    <div class="space-y-8">
+                        <!-- Technical Details -->
+                        <div class="bg-gray-50 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-bold text-gray-900 mb-4" data-i18n="project.tech_details">Technical Details</h3>
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <i class="fas fa-shield-alt text-blue-600 mt-1 mr-3"></i>
+                                    <span><strong>Wazuh SIEM:</strong> Version 4.7 on Ubuntu 22.04</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-chart-line text-blue-600 mt-1 mr-3"></i>
+                                    <span><strong>Zabbix:</strong> Version 6.4 with 50+ monitored hosts</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-network-wired text-blue-600 mt-1 mr-3"></i>
+                                    <span><strong>SNMP:</strong> v2c and v3 on all network devices</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-bell text-blue-600 mt-1 mr-3"></i>
+                                    <span><strong>Alerting:</strong> Email, Slack, and SMS notifications</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-database text-blue-600 mt-1 mr-3"></i>
+                                    <span><strong>Logs:</strong> 100GB/month analyzed</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Skills Demonstrated -->
+                        <div class="bg-blue-50 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-bold text-gray-900 mb-4" data-i18n="project.skills">Skills Demonstrated</h3>
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span data-i18n="projects.project3.skill1">LAN/WAN monitoring with SNMP</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span data-i18n="projects.project3.skill2">Failure detection and alerting</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span data-i18n="projects.project3.skill3">Preventive maintenance planning</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span data-i18n="projects.project3.skill4">System alerts and incident response</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Results -->
+                        <div class="bg-green-50 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-bold text-gray-900 mb-4" data-i18n="project.results">Results Achieved</h3>
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <i class="fas fa-clock text-green-600 mt-1 mr-3"></i>
+                                    <span data-i18n="project3.result1">60% reduction in unplanned downtime</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-bolt text-green-600 mt-1 mr-3"></i>
+                                    <span data-i18n="project3.result2">Early detection of 90% of potential failures</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-chart-bar text-green-600 mt-1 mr-3"></i>
+                                    <span data-i18n="project3.result3">Complete visibility across 50+ devices</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section class="py-16 bg-gradient-to-r from-blue-900 to-indigo-700 text-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="section-title mb-6" data-i18n="project3.need_monitoring">Need Proactive Monitoring?</h2>
+                <p class="text-xl text-blue-100 mb-8" data-i18n="project3.contact_cta">
+                    Ensure your infrastructure stays healthy with real-time monitoring and alerting. Contact me to discuss your monitoring needs.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="index.html#contact" class="bg-white text-blue-800 px-8 py-3 rounded-md font-bold text-lg hover:bg-blue-50 transition" data-i18n="project.contact_me">Contact Me</a>
+                    <a href="projet-securite-reseau-vpn.html" class="border-2 border-white text-white px-8 py-3 rounded-md font-bold text-lg hover:bg-white/10 transition">
+                        <i class="fas fa-arrow-left mr-2"></i> <span data-i18n="project.previous">Previous Project</span>
+                    </a>
+                    <a href="projet-support-it.html" class="border-2 border-white text-white px-8 py-3 rounded-md font-bold text-lg hover:bg-white/10 transition">
+                        <span data-i18n="project.next">Next Project</span> <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-8 md:mb-0">
+                    <a href="index.html" class="text-2xl font-bold text-white">Rahim<span class="text-blue-400">Sekkai</span></a>
+                    <p class="mt-2 text-gray-400" data-i18n="footer.tagline">Network & Systems Technician</p>
+                </div>
+                <div class="flex space-x-6 mb-8 md:mb-0">
+                    <a href="mailto:contact@rahimsekkai.com" class="text-gray-400 hover:text-white text-xl">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <a href="https://wa.me/14181234567" target="_blank" class="text-gray-400 hover:text-white text-xl">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+                <div class="text-center md:text-right">
+                    <p class="text-gray-400">© 2026 Rahim Sekkai. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Translation Data -->
+    <script>
+        const translations = {
+            en: {
+                // Navigation
+                "nav.home": "Home",
+                "nav.projects": "Projects",
+                "nav.skills": "Skills",
+                "nav.about": "About",
+                "nav.contact": "Contact",
+                
+                // Project Specific
+                "project.back": "Back to Projects",
+                "project.duration": "Duration",
+                "project.status": "Status",
+                "project.completed": "Completed",
+                "project.overview": "Project Overview",
+                "project.context": "Context & Challenge",
+                "project.solution": "Solution Implemented",
+                "project.tech_details": "Technical Details",
+                "project.skills": "Skills Demonstrated",
+                "project.results": "Results Achieved",
+                "project.screenshots": "Monitoring Dashboards",
+                "project.contact_me": "Contact Me",
+                "project.previous": "Previous Project",
+                "project.next": "Next Project",
+                
+                // Project 3 Specific
+                "projects.project3.tag": "MONITORING",
+                "projects.project3.title": "System Monitoring & Maintenance",
+                "projects.project3.description": "Proactive monitoring of servers and network equipment to prevent failures.",
+                "projects.project3.skill1": "LAN/WAN monitoring with SNMP",
+                "projects.project3.skill2": "Failure detection and alerting",
+                "projects.project3.skill3": "Preventive maintenance planning",
+                "projects.project3.skill4": "System alerts and incident response",
+                
+                "project3.context1": "The company lacked visibility into its IT infrastructure, leading to unexpected downtimes and delayed responses to issues. There was no centralized monitoring system.",
+                "project3.context2": "The goal was to implement a comprehensive monitoring solution that would provide real-time alerts, historical data for analysis, and proactive maintenance capabilities.",
+                
+                "project3.solution1": "Deployed Wazuh SIEM on Ubuntu Server for security monitoring and log analysis",
+                "project3.solution2": "Configured Zabbix for infrastructure monitoring (servers, switches, firewalls)",
+                "project3.solution3": "Implemented SNMP monitoring on network devices",
+                "project3.solution4": "Set up alerting and notification rules for critical events",
+                "project3.solution5": "Created dashboards for real-time visualization of system health",
+                
+                "project3.screen1": "Wazuh SIEM Dashboard",
+                "project3.screen1_desc": "Real-time security event monitoring and alerting",
+                "project3.screen2": "Zabbix Infrastructure Overview",
+                "project3.screen2_desc": "Server and network device health metrics",
+                
+                "project3.result1": "60% reduction in unplanned downtime",
+                "project3.result2": "Early detection of 90% of potential failures",
+                "project3.result3": "Complete visibility across 50+ devices",
+                
+                "project3.need_monitoring": "Need Proactive Monitoring?",
+                "project3.contact_cta": "Ensure your infrastructure stays healthy with real-time monitoring and alerting. Contact me to discuss your monitoring needs.",
+                
+                // Footer
+                "footer.tagline": "Network & Systems Technician"
+            },
+            fr: {
+                // Navigation
+                "nav.home": "Accueil",
+                "nav.projects": "Projets",
+                "nav.skills": "Compétences",
+                "nav.about": "À Propos",
+                "nav.contact": "Contact",
+                
+                // Project Specific
+                "project.back": "Retour aux Projets",
+                "project.duration": "Durée",
+                "project.status": "Statut",
+                "project.completed": "Terminé",
+                "project.overview": "Aperçu du Projet",
+                "project.context": "Contexte & Défi",
+                "project.solution": "Solution Implémentée",
+                "project.tech_details": "Détails Techniques",
+                "project.skills": "Compétences Démonstrées",
+                "project.results": "Résultats Obtenus",
+                "project.screenshots": "Tableaux de bord",
+                "project.contact_me": "Me Contacter",
+                "project.previous": "Projet Précédent",
+                "project.next": "Projet Suivant",
+                
+                // Project 3 Specific
+                "projects.project3.tag": "SURVEILLANCE",
+                "projects.project3.title": "Supervision & Maintenance Systèmes",
+                "projects.project3.description": "Surveillance proactive des serveurs et équipements réseau pour prévenir les pannes.",
+                "projects.project3.skill1": "Monitoring LAN/WAN avec SNMP",
+                "projects.project3.skill2": "Détection de pannes et alertes",
+                "projects.project3.skill3": "Planification maintenance préventive",
+                "projects.project3.skill4": "Alertes système et réponse aux incidents",
+                
+                "project3.context1": "L'entreprise manquait de visibilité sur son infrastructure IT, entraînant des pannes imprévues et des réponses tardives aux problèmes. Il n'y avait pas de système de surveillance centralisé.",
+                "project3.context2": "L'objectif était de mettre en place une solution de surveillance complète offrant des alertes en temps réel, des données historiques pour l'analyse et des capacités de maintenance proactive.",
+                
+                "project3.solution1": "Déploiement de Wazuh SIEM sur Ubuntu Server pour la surveillance de sécurité et l'analyse de logs",
+                "project3.solution2": "Configuration de Zabbix pour la surveillance de l'infrastructure (serveurs, switches, firewalls)",
+                "project3.solution3": "Implémentation de la surveillance SNMP sur les équipements réseau",
+                "project3.solution4": "Mise en place de règles d'alerte et de notification pour les événements critiques",
+                "project3.solution5": "Création de tableaux de bord pour la visualisation en temps réel de la santé système",
+                
+                "project3.screen1": "Tableau de bord Wazuh SIEM",
+                "project3.screen1_desc": "Surveillance des événements de sécurité en temps réel et alertes",
+                "project3.screen2": "Vue d'ensemble Zabbix",
+                "project3.screen2_desc": "Métriques de santé des serveurs et équipements réseau",
+                
+                "project3.result1": "60% de réduction des pannes imprévues",
+                "project3.result2": "Détection précoce de 90% des pannes potentielles",
+                "project3.result3": "Visibilité complète sur plus de 50 équipements",
+                
+                "project3.need_monitoring": "Besoin d'une surveillance proactive ?",
+                "project3.contact_cta": "Assurez la santé de votre infrastructure avec une surveillance et des alertes en temps réel. Contactez-moi pour discuter de vos besoins.",
+                
+                // Footer
+                "footer.tagline": "Technicien Réseau & Systèmes"
+            }
+        };
+    </script>
+
+    <script>
+        // Set default language to English
+        let currentLang = 'en';
+        
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const closeMenuButton = document.getElementById('close-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.querySelectorAll('#mobile-menu a');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+        
+        // Language switcher functionality
+        function setLanguage(lang) {
+            currentLang = lang;
+            
+            // Update active button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('bg-blue-100', 'text-blue-700');
+                btn.classList.add('text-gray-600', 'hover:text-blue-700');
+            });
+            
+            if (lang === 'en') {
+                document.getElementById('lang-en').classList.add('bg-blue-100', 'text-blue-700');
+                document.getElementById('lang-en').classList.remove('text-gray-600', 'hover:text-blue-700');
+                document.getElementById('lang-en-mobile').classList.add('bg-blue-100', 'text-blue-700');
+                document.getElementById('lang-en-mobile').classList.remove('text-gray-600', 'hover:text-blue-700');
+            } else {
+                document.getElementById('lang-fr').classList.add('bg-blue-100', 'text-blue-700');
+                document.getElementById('lang-fr').classList.remove('text-gray-600', 'hover:text-blue-700');
+                document.getElementById('lang-fr-mobile').classList.add('bg-blue-100', 'text-blue-700');
+                document.getElementById('lang-fr-mobile').classList.remove('text-gray-600', 'hover:text-blue-700');
+            }
+            
+            // Update all elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            
+            // Update page title
+            document.title = lang === 'en' 
+                ? 'System Monitoring & Maintenance | Rahim Sekkai'
+                : 'Supervision & Maintenance Systèmes | Rahim Sekkai';
+            
+            // Save language preference to localStorage
+            localStorage.setItem('preferredLang', lang);
+        }
+        
+        // Initialize language from localStorage or default to English
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('preferredLang') || 'en';
+            setLanguage(savedLang);
+            
+            // Add click events to language buttons
+            document.getElementById('lang-en').addEventListener('click', () => setLanguage('en'));
+            document.getElementById('lang-fr').addEventListener('click', () => setLanguage('fr'));
+            document.getElementById('lang-en-mobile').addEventListener('click', () => {
+                setLanguage('en');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            document.getElementById('lang-fr-mobile').addEventListener('click', () => {
+                setLanguage('fr');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+    </script>
+</body>
+</html>

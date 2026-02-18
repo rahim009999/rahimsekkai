@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rahim Sekkai - Technicien Réseau & Systèmes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e40af;
+            --secondary: #0f172a;
+            --accent: #3b82f6;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1f2937;
+            overflow-x: hidden;
+        }
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+        }
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 800;
+            line-height: 1.2;
+        }
+        .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .mobile-menu {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        .cert-badge {
+            transition: all 0.3s ease;
+        }
+        .cert-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .skill-icon {
+            transition: transform 0.3s ease;
+        }
+        .skill-icon:hover {
+            transform: scale(1.1);
+        }
+        .language-switcher {
+            position: relative;
+            z-index: 1000;
+        }
+        .whatsapp-button {
+            background-color: #25D366;
+            transition: all 0.3s ease;
+        }
+        .whatsapp-button:hover {
+            background-color: #128C7E;
+            transform: translateY(-2px);
+        }
+        .clickable-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .clickable-card:hover {
+            border-color: var(--accent);
+        }
+        .tech-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .tech-logo span {
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #4b5563;
+        }
+        @media (max-width: 768px) {
+            .tech-logo {
+                padding: 0.5rem;
+            }
+            .tech-logo i {
+                font-size: 2rem;
+            }
+            .tech-logo span {
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <header class="sticky top-0 z-40 bg-white shadow-md">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-blue-800">Rahim<span class="text-blue-600">Sekkai</span></a>
+            
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#home" class="nav-link text-gray-700 font-medium hover:text-blue-700" data-i18n="nav.home">Home</a>
+                <a href="#projects" class="nav-link text-gray-700 font-medium hover:text-blue-700" data-i18n="nav.projects">Projects</a>
+                <a href="#skills" class="nav-link text-gray-700 font-medium hover:text-blue-700" data-i18n="nav.skills">Skills</a>
+                <a href="#about" class="nav-link text-gray-700 font-medium hover:text-blue-700" data-i18n="nav.about">About</a>
+                <a href="#contact" class="nav-link text-gray-700 font-medium hover:text-blue-700" data-i18n="nav.contact">Contact</a>
+                <!-- Two CV buttons -->
+                <a href="/cv/rahim_sekkai_cv_fr.pdf" download class="bg-blue-700 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-800 transition text-sm">CV FR</a>
+                <a href="/cv/rahim_sekkai_cv_en.pdf" download class="bg-blue-700 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-800 transition text-sm">CV EN</a>
+                
+                <!-- Language Switcher -->
+                <div class="language-switcher flex items-center space-x-2">
+                    <button id="lang-en" class="lang-btn px-3 py-1 rounded-full font-medium bg-blue-100 text-blue-700">EN</button>
+                    <button id="lang-fr" class="lang-btn px-3 py-1 rounded-full font-medium text-gray-600 hover:text-blue-700">FR</button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="md:hidden text-gray-700">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </nav>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu md:hidden fixed inset-0 bg-white z-40 p-8">
+            <div class="flex justify-between items-center mb-10">
+                <a href="#" class="text-2xl font-bold text-blue-800">Rahim<span class="text-blue-600">Sekkai</span></a>
+                <button id="close-menu-button" class="text-gray-700">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            <div class="flex flex-col space-y-6">
+                <a href="#home" class="text-xl font-medium text-gray-700 hover:text-blue-700 py-2" data-i18n="nav.home">Home</a>
+                <a href="#projects" class="text-xl font-medium text-gray-700 hover:text-blue-700 py-2" data-i18n="nav.projects">Projects</a>
+                <a href="#skills" class="text-xl font-medium text-gray-700 hover:text-blue-700 py-2" data-i18n="nav.skills">Skills</a>
+                <a href="#about" class="text-xl font-medium text-gray-700 hover:text-blue-700 py-2" data-i18n="nav.about">About</a>
+                <a href="#contact" class="text-xl font-medium text-gray-700 hover:text-blue-700 py-2" data-i18n="nav.contact">Contact</a>
+                <!-- Mobile CV buttons -->
+                <div class="flex space-x-4 mt-4">
+                    <a href="/cv/rahim_sekkai_cv_fr.pdf" download class="bg-blue-700 text-white px-5 py-3 rounded-md font-medium text-center hover:bg-blue-800 transition flex-1">CV FR</a>
+                    <a href="/cv/rahim_sekkai_cv_en.pdf" download class="bg-blue-700 text-white px-5 py-3 rounded-md font-medium text-center hover:bg-blue-800 transition flex-1">CV EN</a>
+                </div>
+                <!-- Language Switcher in Mobile Menu -->
+                <div class="language-switcher flex justify-center space-x-4 mt-4">
+                    <button id="lang-en-mobile" class="lang-btn px-4 py-2 rounded-full font-medium bg-blue-100 text-blue-700">EN</button>
+                    <button id="lang-fr-mobile" class="lang-btn px-4 py-2 rounded-full font-medium text-gray-600 hover:text-blue-700">FR</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="py-16 md:py-24 bg-gradient-to-r from-blue-900 to-blue-700 text-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="md:w-2/3 mb-12 md:mb-0">
+                    <h1 class="hero-title mb-6" data-i18n="hero.title">
+                        Network & Systems Technician<br>
+                        <span class="text-blue-200" data-i18n="hero.subtitle">Cybersecurity & Infrastructure Specialist</span>
+                    </h1>
+                    <p class="text-xl mb-8 text-blue-100 max-w-3xl" data-i18n="hero.description">
+                        IT professional with expertise in network security, system administration, and infrastructure deployment. 
+                        Passionate about creating secure, efficient, and reliable IT environments for modern enterprises.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#contact" class="bg-white text-blue-800 px-8 py-3 rounded-md font-bold text-lg hover:bg-blue-50 transition" data-i18n="hero.contact_btn">Contact Me</a>
+                        <a href="#projects" class="border-2 border-white text-white px-8 py-3 rounded-md font-bold text-lg hover:bg-white/10 transition" data-i18n="hero.projects_btn">View Projects</a>
+                    </div>
+                </div>
+                <div class="md:w-1/3 flex justify-center">
+                    <div class="relative">
+                        <div class="w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                            <i class="fas fa-server text-white text-8xl"></i>
+                        </div>
+                        <!-- Removed location badge -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section class="py-12 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl font-bold text-center text-gray-800 mb-10" data-i18n="certifications.title">Certifications & Continuous Learning</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="cert-badge bg-white p-6 rounded-xl shadow-md flex flex-col items-center text-center">
+                    <i class="fas fa-shield-alt text-blue-600 text-4xl mb-4"></i>
+                    <h3 class="font-bold text-lg mb-2">Saylor Academy</h3>
+                    <p class="text-gray-600 text-sm" data-i18n="certifications.cert1">Cybersecurity Fundamentals</p>
+                </div>
+                <div class="cert-badge bg-white p-6 rounded-xl shadow-md flex flex-col items-center text-center">
+                    <i class="fas fa-network-wired text-blue-600 text-4xl mb-4"></i>
+                    <h3 class="font-bold text-lg mb-2">Saylor Academy</h3>
+                    <p class="text-gray-600 text-sm" data-i18n="certifications.cert2">Computer Networking</p>
+                </div>
+                <div class="cert-badge bg-white p-6 rounded-xl shadow-md flex flex-col items-center text-center">
+                    <i class="fab fa-microsoft text-blue-600 text-4xl mb-4"></i>
+                    <h3 class="font-bold text-lg mb-2">Microsoft</h3>
+                    <p class="text-gray-600 text-sm" data-i18n="certifications.cert3">Windows Server Administration</p>
+                </div>
+                <div class="cert-badge bg-white p-6 rounded-xl shadow-md flex flex-col items-center text-center">
+                    <i class="fas fa-user-shield text-blue-600 text-4xl mb-4"></i>
+                    <h3 class="font-bold text-lg mb-2">Fortinet NSE</h3>
+                    <p class="text-gray-600 text-sm" data-i18n="certifications.cert4">Network Security Associate</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-center mb-4 text-gray-900" data-i18n="projects.title">Technical Projects</h2>
+            <p class="text-xl text-center text-gray-600 mb-16 max-w-3xl mx-auto" data-i18n="projects.subtitle">
+                Hands-on experience with enterprise infrastructure, network security, and system administration
+            </p>
+            
+            <!-- Project 1 - Complete SME IT Infrastructure (Clickable) -->
+            <a href="projet-infrastructure-sme.html" class="block project-card mb-16 bg-gray-50 rounded-2xl overflow-hidden shadow-lg border border-gray-200 clickable-card">
+                <div class="md:flex">
+                    <div class="md:w-2/5 bg-gradient-to-br from-blue-900 to-blue-700 p-8 md:p-12 text-white flex flex-col justify-center">
+                        <span class="inline-block bg-yellow-500 text-white text-sm font-bold px-4 py-1 rounded-full mb-4 w-fit" data-i18n="projects.project1.tag">KEY PROJECT</span>
+                        <h3 class="text-3xl font-bold mb-4" data-i18n="projects.project1.title">Complete SME IT Infrastructure</h3>
+                        <p class="mb-6 text-blue-100" data-i18n="projects.project1.description">Design and deployment of a complete network and system infrastructure for a 30-user SME.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-blue-800 text-white text-xs px-3 py-1 rounded-full">Windows Server 2019</span>
+                            <span class="bg-blue-800 text-white text-xs px-3 py-1 rounded-full">Active Directory</span>
+                            <span class="bg-blue-800 text-white text-xs px-3 py-1 rounded-full">DNS/DHCP</span>
+                            <span class="bg-blue-800 text-white text-xs px-3 py-1 rounded-full">VLAN</span>
+                            <span class="bg-blue-800 text-white text-xs px-3 py-1 rounded-full">Fortinet/pfSense</span>
+                        </div>
+                        <div class="text-white font-bold hover:text-blue-200 inline-flex items-center">
+                            View Case Study <i class="fas fa-arrow-right ml-2"></i>
+                        </div>
+                    </div>
+                    <div class="md:w-3/5 p-8 md:p-12">
+                        <h4 class="text-xl font-bold text-gray-800 mb-4" data-i18n="projects.demonstrates">Demonstrated Skills</h4>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                <span data-i18n="projects.project1.skill1">AD administration and user/rights management</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                <span data-i18n="projects.project1.skill2">Network segmentation (Users/IT/Management VLANs)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                <span data-i18n="projects.project1.skill3">Basic enterprise security implementation</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                <span data-i18n="projects.project1.skill4">Professional documentation and procedures</span>
+                            </li>
+                        </ul>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-white p-4 rounded-lg border">
+                                <p class="font-bold text-blue-700" data-i18n="projects.project1.show1">Network Diagram</p>
+                                <p class="text-sm text-gray-600" data-i18n="projects.project1.show1_desc">Visual infrastructure overview</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg border">
+                                <p class="font-bold text-blue-700" data-i18n="projects.project1.show2">AD Structure + GPO</p>
+                                <p class="text-sm text-gray-600" data-i18n="projects.project1.show2_desc">Organization and policies</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            
+            <!-- Other Projects Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 2 - Network Security -->
+                <a href="projet-securite-reseau-vpn.html" class="project-card bg-white rounded-xl overflow-hidden shadow-lg border border-gray-200">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-gray-900" data-i18n="projects.project2.title">Network Security & Remote Access (VPN + Firewall)</h3>
+                            <span class="bg-green-100 text-green-800 text-xs font-bold px-3 py-1 rounded-full" data-i18n="projects.project2.tag">NETWORK</span>
+                        </div>
+                        <p class="text-gray-600 mb-6" data-i18n="projects.project2.description">Implementation of secure access for remote employees and site interconnection.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">Fortinet/pfSense</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">IPSec VPN</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">SSL VPN</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">Firewall Rules</span>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="font-bold text-gray-800 mb-2" data-i18n="projects.demonstrates">Demonstrated Skills</h4>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• <span data-i18n="projects.project2.skill1">Secure remote access</span></li>
+                                <li>• <span data-i18n="projects.project2.skill2">Firewall configuration</span></li>
+                                <li>• <span data-i18n="projects.project2.skill3">Network traffic management</span></li>
+                                <li>• <span data-i18n="projects.project2.skill4">Connection monitoring</span></li>
+                            </ul>
+                        </div>
+                        <div class="text-blue-700 font-medium hover:text-blue-900 inline-flex items-center" data-i18n="projects.view_details">
+                            View Details <i class="fas fa-chevron-right ml-2 text-sm"></i>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Project 3 - System Monitoring -->
+                <a href="projet-monitoring-systemes.html" class="project-card bg-white rounded-xl overflow-hidden shadow-lg border border-gray-200">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-gray-900" data-i18n="projects.project3.title">System Monitoring & Maintenance</h3>
+                            <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full" data-i18n="projects.project3.tag">MONITORING</span>
+                        </div>
+                        <p class="text-gray-600 mb-6" data-i18n="projects.project3.description">Proactive monitoring of servers and network equipment to prevent failures.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">Zabbix/Wazuh</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">Windows/Linux</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">SNMP</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">Alerting</span>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="font-bold text-gray-800 mb-2" data-i18n="projects.demonstrates">Demonstrated Skills</h4>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• <span data-i18n="projects.project3.skill1">LAN/WAN monitoring</span></li>
+                                <li>• <span data-i18n="projects.project3.skill2">Failure detection</span></li>
+                                <li>• <span data-i18n="projects.project3.skill3">Preventive maintenance</span></li>
+                                <li>• <span data-i18n="projects.project3.skill4">System alerts</span></li>
+                            </ul>
+                        </div>
+                        <div class="text-blue-700 font-medium hover:text-blue-900 inline-flex items-center" data-i18n="projects.view_details">
+                            View Details <i class="fas fa-chevron-right ml-2 text-sm"></i>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Project 4 - IT Support -->
+                <a href="projet-support-it.html" class="project-card bg-white rounded-xl overflow-hidden shadow-lg border border-gray-200">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-gray-900" data-i18n="projects.project4.title">IT Support & User Management</h3>
+                            <span class="bg-purple-100 text-purple-800 text-xs font-bold px-3 py-1 rounded-full" data-i18n="projects.project4.tag">SUPPORT</span>
+                        </div>
+                        <p class="text-gray-600 mb-6" data-i18n="projects.project4.description">Daily user management and technical support for field technician/N1-N2 positions.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">Active Directory</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">Remote Support</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">Troubleshooting</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">Documentation</span>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="font-bold text-gray-800 mb-2" data-i18n="projects.demonstrates">Demonstrated Skills</h4>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• <span data-i18n="projects.project4.skill1">AD user creation/deletion</span></li>
+                                <li>• <span data-i18n="projects.project4.skill2">Password reset</span></li>
+                                <li>• <span data-i18n="projects.project4.skill3">Remote control</span></li>
+                                <li>• <span data-i18n="projects.project4.skill4">Hardware/software troubleshooting</span></li>
+                            </ul>
+                        </div>
+                        <div class="text-blue-700 font-medium hover:text-blue-900 inline-flex items-center" data-i18n="projects.view_details">
+                            View Details <i class="fas fa-chevron-right ml-2 text-sm"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-gradient-to-b from-gray-50 to-white">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-center mb-4 text-gray-900" data-i18n="skills.title">Technical Skills</h2>
+            <p class="text-xl text-center text-gray-600 mb-16 max-w-3xl mx-auto" data-i18n="skills.subtitle">
+                Expertise across network infrastructure, system administration, and cybersecurity technologies
+            </p>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Networking -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
+                    <div class="skill-icon w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-network-wired text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4" data-i18n="skills.networking.title">Networking</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span data-i18n="skills.networking.skill1">VLAN Segmentation</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span data-i18n="skills.networking.skill2">VPN Configuration (IPSec/SSL)</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span data-i18n="skills.networking.skill3">Firewall Management</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span data-i18n="skills.networking.skill4">LAN/WAN Infrastructure</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Systems -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
+                    <div class="skill-icon w-16 h-16 bg-green-100 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-server text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4" data-i18n="skills.systems.title">Systems Administration</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span data-i18n="skills.systems.skill1">Windows Server 2019/2022</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span data-i18n="skills.systems.skill2">Active Directory & GPO</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span data-i18n="skills.systems.skill3">DNS/DHCP Services</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span data-i18n="skills.systems.skill4">Linux Server Management</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Security -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
+                    <div class="skill-icon w-16 h-16 bg-red-100 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-shield-alt text-red-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4" data-i18n="skills.security.title">Cybersecurity</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span data-i18n="skills.security.skill1">SIEM Implementation (Wazuh)</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span data-i18n="skills.security.skill2">Access Control & Monitoring</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span data-i18n="skills.security.skill3">Patch Management</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span data-i18n="skills.security.skill4">Incident Response</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Support -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
+                    <div class="skill-icon w-16 h-16 bg-purple-100 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-headset text-purple-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4" data-i18n="skills.support.title">IT Support</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span data-i18n="skills.support.skill1">Troubleshooting & User Support</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span data-i18n="skills.support.skill2">Hardware/Software Diagnostics</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span data-i18n="skills.support.skill3">Remote Assistance</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span data-i18n="skills.support.skill4">Technical Documentation</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Technology Logos -->
+            <div class="mt-16 pt-12 border-t border-gray-300">
+                <h3 class="text-2xl font-bold text-center mb-10 text-gray-800" data-i18n="skills.technologies">Technologies I Work With</h3>
+                <div class="grid grid-cols-3 md:grid-cols-6 gap-4 md:gap-8">
+                    <div class="tech-logo">
+                        <i class="fab fa-windows text-4xl text-blue-500"></i>
+                        <span>Windows</span>
+                    </div>
+                    <div class="tech-logo">
+                        <i class="fab fa-ubuntu text-4xl text-orange-600"></i>
+                        <span>Ubuntu</span>
+                    </div>
+                    <div class="tech-logo">
+                        <i class="fab fa-vmware text-4xl text-blue-700"></i>
+                        <span>VMware</span>
+                    </div>
+                    <div class="tech-logo">
+                        <i class="fas fa-shield-alt text-4xl text-green-600"></i>
+                        <span>Wazuh</span>
+                    </div>
+                    <div class="tech-logo">
+                        <i class="fas fa-chart-line text-4xl text-red-500"></i>
+                        <span>Zabbix</span>
+                    </div>
+                    <div class="tech-logo">
+                        <i class="fas fa-project-diagram text-4xl text-purple-600"></i>
+                        <span>draw.io</span>
+                    </div>
+                    <div class="tech-logo">
+                        <i class="fas fa-fire text-4xl text-orange-500"></i>
+                        <span>pfSense</span>
+                    </div>
+                    <div class="tech-logo">
+                        <i class="fas fa-shield-virus text-4xl text-blue-600"></i>
+                        <span>Fortinet</span>
+                    </div>
+                    <div class="tech-logo">
+                        <i class="fas fa-server text-4xl text-gray-700"></i>
+                        <span>Active Directory</span>
+                    </div>
+                    <div class="tech-logo">
+                        <i class="fas fa-network-wired text-4xl text-green-700"></i>
+                        <span>VLAN</span>
+                    </div>
+                    <div class="tech-logo">
+                        <i class="fas fa-lock text-4xl text-indigo-600"></i>
+                        <span>IPSec/SSL VPN</span>
+                    </div>
+                    <div class="tech-logo">
+                        <i class="fas fa-bell text-4xl text-yellow-600"></i>
+                        <span>SNMP</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section with Photo instead of Timeline -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-2/5 mb-12 lg:mb-0 lg:pr-12">
+                    <h2 class="section-title mb-6 text-gray-900" data-i18n="about.title">About Me</h2>
+                    <p class="text-lg text-gray-700 mb-6" data-i18n="about.description1">
+                        IT professional with a passion for building secure, reliable, and efficient infrastructure solutions. 
+                        My approach combines technical expertise with a focus on business objectives and user needs.
+                    </p>
+                    <p class="text-lg text-gray-700 mb-8" data-i18n="about.description2">
+                        I specialize in network security, system administration, and infrastructure deployment, 
+                        with hands-on experience in enterprise environments and cybersecurity operations.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#contact" class="bg-blue-700 text-white px-8 py-3 rounded-md font-bold text-lg hover:bg-blue-800 transition inline-flex items-center" data-i18n="about.contact_btn">
+                            Get in Touch <i class="fas fa-envelope ml-3"></i>
+                        </a>
+                        <a href="https://wa.me/14181234567?text=Hello%20Rahim,%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect" 
+                           target="_blank" 
+                           class="whatsapp-button text-white px-6 py-3 rounded-md font-bold text-lg inline-flex items-center">
+                            <i class="fab fa-whatsapp mr-3 text-xl"></i> WhatsApp
+                        </a>
+                    </div>
+                </div>
+                <div class="lg:w-3/5 flex justify-center">
+                    <!-- Photo container -->
+                    <div class="relative">
+                        <div class="w-72 h-72 md:w-96 md:h-96 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center overflow-hidden shadow-2xl">
+                            <!-- Replace the icon with your photo: use an img tag with object-cover -->
+                            <i class="fas fa-user text-white text-9xl"></i>
+                            <!-- Example with image (commented): <img src="/images/rahim.jpg" alt="Rahim Sekkai" class="w-full h-full object-cover"> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gradient-to-r from-blue-900 to-blue-700 text-white">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-center mb-4" data-i18n="contact.title">Get In Touch</h2>
+            <p class="text-xl text-center text-blue-100 mb-16 max-w-3xl mx-auto" data-i18n="contact.subtitle">
+                Interested in discussing opportunities or technical projects? Feel free to reach out.
+            </p>
+            
+            <div class="flex flex-col lg:flex-row justify-between items-center">
+                <div class="lg:w-2/5 mb-12 lg:mb-0">
+                    <h3 class="text-2xl font-bold mb-8" data-i18n="contact.info_title">Contact Information</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <i class="fas fa-user text-2xl mr-4 mt-1 text-blue-300"></i>
+                            <div>
+                                <p class="font-bold" data-i18n="contact.name">Name</p>
+                                <p class="text-blue-100">Rahim Sekkai</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-envelope text-2xl mr-4 mt-1 text-blue-300"></i>
+                            <div>
+                                <p class="font-bold" data-i18n="contact.email">Email</p>
+                                <p class="text-blue-100">contact@rahimsekkai.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fab fa-whatsapp text-2xl mr-4 mt-1 text-blue-300"></i>
+                            <div>
+                                <p class="font-bold">WhatsApp</p>
+                                <p class="text-blue-100">+1 (418) 123-4567</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-2xl mr-4 mt-1 text-blue-300"></i>
+                            <div>
+                                <p class="font-bold" data-i18n="contact.location">Location</p>
+                                <p class="text-blue-100" data-i18n="contact.location_text">Open to opportunities</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-file-pdf text-2xl mr-4 mt-1 text-blue-300"></i>
+                            <div>
+                                <p class="font-bold" data-i18n="contact.resume">Resume</p>
+                                <p class="text-blue-100" data-i18n="contact.resume_text">Download my complete CV with detailed experience</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-12 flex flex-wrap gap-4">
+                        <!-- Two CV buttons -->
+                        <a href="/cv/rahim_sekkai_cv_fr.pdf" download class="bg-white text-blue-800 px-6 py-3 rounded-md font-bold text-lg hover:bg-blue-50 transition inline-flex items-center">
+                            <i class="fas fa-download mr-2"></i> CV FR
+                        </a>
+                        <a href="/cv/rahim_sekkai_cv_en.pdf" download class="bg-white text-blue-800 px-6 py-3 rounded-md font-bold text-lg hover:bg-blue-50 transition inline-flex items-center">
+                            <i class="fas fa-download mr-2"></i> CV EN
+                        </a>
+                        <a href="https://wa.me/14181234567?text=Hello%20Rahim,%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect" 
+                           target="_blank" 
+                           class="whatsapp-button text-white px-6 py-3 rounded-md font-bold text-lg inline-flex items-center">
+                            <i class="fab fa-whatsapp mr-3 text-xl"></i> WhatsApp
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2 bg-white/10 backdrop-blur-sm rounded-2xl p-8">
+                    <h3 class="text-2xl font-bold mb-6" data-i18n="contact.contact_options">Contact Options</h3>
+                    <div class="space-y-6">
+                        <div class="bg-white/10 p-6 rounded-lg">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-envelope text-2xl mr-4 text-blue-300"></i>
+                                <h4 class="text-xl font-bold" data-i18n="contact.email_title">Email Me</h4>
+                            </div>
+                            <p class="text-blue-100 mb-4" data-i18n="contact.email_text">For detailed inquiries or project discussions, send me an email.</p>
+                            <a href="mailto:contact@rahimsekkai.com" class="inline-flex items-center bg-blue-600 text-white px-6 py-3 rounded-md font-medium hover:bg-blue-700 transition">
+                                <i class="fas fa-paper-plane mr-3"></i> <span data-i18n="contact.send_email">Send Email</span>
+                            </a>
+                        </div>
+                        
+                        <div class="bg-white/10 p-6 rounded-lg">
+                            <div class="flex items-center mb-4">
+                                <i class="fab fa-whatsapp text-2xl mr-4 text-green-300"></i>
+                                <h4 class="text-xl font-bold" data-i18n="contact.whatsapp_title">WhatsApp Message</h4>
+                            </div>
+                            <p class="text-blue-100 mb-4" data-i18n="contact.whatsapp_text">For quick questions or to schedule a call, message me on WhatsApp.</p>
+                            <a href="https://wa.me/14181234567?text=Hello%20Rahim,%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect" 
+                               target="_blank" 
+                               class="whatsapp-button text-white px-6 py-3 rounded-md font-bold inline-flex items-center">
+                                <i class="fab fa-whatsapp mr-3 text-xl"></i> <span data-i18n="contact.open_whatsapp">Open WhatsApp</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-8 md:mb-0">
+                    <a href="#" class="text-2xl font-bold text-white">Rahim<span class="text-blue-400">Sekkai</span></a>
+                    <p class="mt-2 text-gray-400" data-i18n="footer.tagline">Network & Systems Technician</p>
+                </div>
+                <div class="flex space-x-6 mb-8 md:mb-0">
+                    <!-- Email icon -->
+                    <a href="mailto:contact@rahimsekkai.com" class="text-gray-400 hover:text-white text-xl">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <!-- WhatsApp icon -->
+                    <a href="https://wa.me/14181234567" target="_blank" class="text-gray-400 hover:text-white text-xl">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+                <div class="text-center md:text-right">
+                    <p class="text-gray-400">© 2026 Rahim Sekkai. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Translation Data -->
+    <script>
+        const translations = {
+            en: {
+                // Navigation
+                "nav.home": "Home",
+                "nav.projects": "Projects",
+                "nav.skills": "Skills",
+                "nav.about": "About",
+                "nav.contact": "Contact",
+                
+                // Hero Section
+                "hero.title": "Network & Systems Technician",
+                "hero.subtitle": "Cybersecurity & Infrastructure Specialist",
+                "hero.description": "IT professional with expertise in network security, system administration, and infrastructure deployment. Passionate about creating secure, efficient, and reliable IT environments for modern enterprises.",
+                "hero.contact_btn": "Contact Me",
+                "hero.projects_btn": "View Projects",
+                "hero.available": "Available for opportunities",
+                
+                // Certifications
+                "certifications.title": "Certifications & Continuous Learning",
+                "certifications.cert1": "Cybersecurity Fundamentals",
+                "certifications.cert2": "Computer Networking",
+                "certifications.cert3": "Windows Server Administration",
+                "certifications.cert4": "Network Security Associate",
+                
+                // Projects
+                "projects.title": "Technical Projects",
+                "projects.subtitle": "Hands-on experience with enterprise infrastructure, network security, and system administration",
+                "projects.project1.tag": "KEY PROJECT",
+                "projects.project1.title": "Complete SME IT Infrastructure",
+                "projects.project1.description": "Design and deployment of a complete network and system infrastructure for a 30-user SME.",
+                "projects.project1.skill1": "AD administration and user/rights management",
+                "projects.project1.skill2": "Network segmentation (Users/IT/Management VLANs)",
+                "projects.project1.skill3": "Basic enterprise security implementation",
+                "projects.project1.skill4": "Professional documentation and procedures",
+                "projects.project1.show1": "Network Diagram",
+                "projects.project1.show1_desc": "Visual infrastructure overview",
+                "projects.project1.show2": "AD Structure + GPO",
+                "projects.project1.show2_desc": "Organization and policies",
+                "projects.project2.title": "Network Security & Remote Access (VPN + Firewall)",
+                "projects.project2.tag": "NETWORK",
+                "projects.project2.description": "Implementation of secure access for remote employees and site interconnection.",
+                "projects.project2.skill1": "Secure remote access",
+                "projects.project2.skill2": "Firewall configuration",
+                "projects.project2.skill3": "Network traffic management",
+                "projects.project2.skill4": "Connection monitoring",
+                "projects.project3.title": "System Monitoring & Maintenance",
+                "projects.project3.tag": "MONITORING",
+                "projects.project3.description": "Proactive monitoring of servers and network equipment to prevent failures.",
+                "projects.project3.skill1": "LAN/WAN monitoring",
+                "projects.project3.skill2": "Failure detection",
+                "projects.project3.skill3": "Preventive maintenance",
+                "projects.project3.skill4": "System alerts",
+                "projects.project4.title": "IT Support & User Management",
+                "projects.project4.tag": "SUPPORT",
+                "projects.project4.description": "Daily user management and technical support for field technician/N1-N2 positions.",
+                "projects.project4.skill1": "AD user creation/deletion",
+                "projects.project4.skill2": "Password reset",
+                "projects.project4.skill3": "Remote control",
+                "projects.project4.skill4": "Hardware/software troubleshooting",
+                "projects.demonstrates": "Demonstrated Skills",
+                "projects.view_case": "View Case Study",
+                "projects.view_details": "View Details",
+                
+                // Skills
+                "skills.title": "Technical Skills",
+                "skills.subtitle": "Expertise across network infrastructure, system administration, and cybersecurity technologies",
+                "skills.networking.title": "Networking",
+                "skills.networking.skill1": "VLAN Segmentation",
+                "skills.networking.skill2": "VPN Configuration (IPSec/SSL)",
+                "skills.networking.skill3": "Firewall Management",
+                "skills.networking.skill4": "LAN/WAN Infrastructure",
+                "skills.systems.title": "Systems Administration",
+                "skills.systems.skill1": "Windows Server 2019/2022",
+                "skills.systems.skill2": "Active Directory & GPO",
+                "skills.systems.skill3": "DNS/DHCP Services",
+                "skills.systems.skill4": "Linux Server Management",
+                "skills.security.title": "Cybersecurity",
+                "skills.security.skill1": "SIEM Implementation (Wazuh)",
+                "skills.security.skill2": "Access Control & Monitoring",
+                "skills.security.skill3": "Patch Management",
+                "skills.security.skill4": "Incident Response",
+                "skills.support.title": "IT Support",
+                "skills.support.skill1": "Troubleshooting & User Support",
+                "skills.support.skill2": "Hardware/Software Diagnostics",
+                "skills.support.skill3": "Remote Assistance",
+                "skills.support.skill4": "Technical Documentation",
+                "skills.technologies": "Technologies I Work With",
+                
+                // About
+                "about.title": "About Me",
+                "about.description1": "IT professional with a passion for building secure, reliable, and efficient infrastructure solutions. My approach combines technical expertise with a focus on business objectives and user needs.",
+                "about.description2": "I specialize in network security, system administration, and infrastructure deployment, with hands-on experience in enterprise environments and cybersecurity operations.",
+                "about.contact_btn": "Get in Touch",
+                
+                // Contact
+                "contact.title": "Get In Touch",
+                "contact.subtitle": "Interested in discussing opportunities or technical projects? Feel free to reach out.",
+                "contact.info_title": "Contact Information",
+                "contact.name": "Name",
+                "contact.email": "Email",
+                "contact.location": "Location",
+                "contact.location_text": "Open to opportunities",
+                "contact.resume": "Resume",
+                "contact.resume_text": "Download my complete CV with detailed experience",
+                "contact.contact_options": "Contact Options",
+                "contact.email_title": "Email Me",
+                "contact.email_text": "For detailed inquiries or project discussions, send me an email.",
+                "contact.send_email": "Send Email",
+                "contact.whatsapp_title": "WhatsApp Message",
+                "contact.whatsapp_text": "For quick questions or to schedule a call, message me on WhatsApp.",
+                "contact.open_whatsapp": "Open WhatsApp",
+                
+                // Footer
+                "footer.tagline": "Network & Systems Technician"
+            },
+            fr: {
+                // Navigation
+                "nav.home": "Accueil",
+                "nav.projects": "Projets",
+                "nav.skills": "Compétences",
+                "nav.about": "À Propos",
+                "nav.contact": "Contact",
+                
+                // Hero Section
+                "hero.title": "Technicien Réseau & Systèmes",
+                "hero.subtitle": "Spécialiste Cybersécurité & Infrastructure",
+                "hero.description": "Professionnel IT expert en sécurité réseau, administration système et déploiement d'infrastructure. Passionné par la création d'environnements IT sécurisés, efficaces et fiables pour les entreprises modernes.",
+                "hero.contact_btn": "Me Contacter",
+                "hero.projects_btn": "Voir les Projets",
+                "hero.available": "Disponible pour opportunités",
+                
+                // Certifications
+                "certifications.title": "Certifications & Apprentissage Continu",
+                "certifications.cert1": "Fondamentaux Cybersécurité",
+                "certifications.cert2": "Réseautique Informatique",
+                "certifications.cert3": "Administration Windows Server",
+                "certifications.cert4": "Associé Sécurité Réseau",
+                
+                // Projects
+                "projects.title": "Projets Techniques",
+                "projects.subtitle": "Expérience pratique avec infrastructure d'entreprise, sécurité réseau et administration système",
+                "projects.project1.tag": "PROJET CLÉ",
+                "projects.project1.title": "Infrastructure IT Complète PME",
+                "projects.project1.description": "Conception et déploiement d'une infrastructure réseau et système complète pour une PME de 30 utilisateurs.",
+                "projects.project1.skill1": "Administration AD et gestion utilisateurs/droits",
+                "projects.project1.skill2": "Segmentation réseau (VLAN Utilisateurs/IT/Gestion)",
+                "projects.project1.skill3": "Implémentation sécurité d'entreprise basique",
+                "projects.project1.skill4": "Documentation et procédures professionnelles",
+                "projects.project1.show1": "Schéma Réseau",
+                "projects.project1.show1_desc": "Vue d'ensemble infrastructure",
+                "projects.project1.show2": "Structure AD + GPO",
+                "projects.project1.show2_desc": "Organisation et politiques",
+                "projects.project2.title": "Sécurisation Réseau & Accès Distant (VPN + Firewall)",
+                "projects.project2.tag": "RÉSEAU",
+                "projects.project2.description": "Mise en place d'un accès sécurisé pour employés distants et interconnexion de sites.",
+                "projects.project2.skill1": "Accès distant sécurisé",
+                "projects.project2.skill2": "Configuration firewall",
+                "projects.project2.skill3": "Gestion trafic réseau",
+                "projects.project2.skill4": "Surveillance connexions",
+                "projects.project3.title": "Supervision & Maintenance Systèmes",
+                "projects.project3.tag": "SURVEILLANCE",
+                "projects.project3.description": "Surveillance proactive des serveurs et équipements réseau pour prévenir les pannes.",
+                "projects.project3.skill1": "Monitoring LAN/WAN",
+                "projects.project3.skill2": "Détection de pannes",
+                "projects.project3.skill3": "Maintenance préventive",
+                "projects.project3.skill4": "Alertes système",
+                "projects.project4.title": "Support IT & Gestion Utilisateurs",
+                "projects.project4.tag": "SUPPORT",
+                "projects.project4.description": "Gestion quotidienne des utilisateurs et support technique pour postes technicien terrain/N1-N2.",
+                "projects.project4.skill1": "Création/suppression utilisateurs AD",
+                "projects.project4.skill2": "Réinitialisation mots de passe",
+                "projects.project4.skill3": "Prise en main à distance",
+                "projects.project4.skill4": "Dépannage matériel/logiciel",
+                "projects.demonstrates": "Compétences Démonstrées",
+                "projects.view_case": "Voir l'Étude de Cas",
+                "projects.view_details": "Voir Détails",
+                
+                // Skills
+                "skills.title": "Compétences Techniques",
+                "skills.subtitle": "Expertise en infrastructure réseau, administration système et technologies cybersécurité",
+                "skills.networking.title": "Réseautique",
+                "skills.networking.skill1": "Segmentation VLAN",
+                "skills.networking.skill2": "Configuration VPN (IPSec/SSL)",
+                "skills.networking.skill3": "Gestion Firewall",
+                "skills.networking.skill4": "Infrastructure LAN/WAN",
+                "skills.systems.title": "Administration Systèmes",
+                "skills.systems.skill1": "Windows Server 2019/2022",
+                "skills.systems.skill2": "Active Directory & GPO",
+                "skills.systems.skill3": "Services DNS/DHCP",
+                "skills.systems.skill4": "Gestion Linux Server",
+                "skills.security.title": "Cybersécurité",
+                "skills.security.skill1": "Implémentation SIEM (Wazuh)",
+                "skills.security.skill2": "Contrôle Accès & Surveillance",
+                "skills.security.skill3": "Gestion des Correctifs",
+                "skills.security.skill4": "Réponse aux Incidents",
+                "skills.support.title": "Support IT",
+                "skills.support.skill1": "Dépannage & Support Utilisateurs",
+                "skills.support.skill2": "Diagnostic Matériel/Logiciel",
+                "skills.support.skill3": "Assistance à Distance",
+                "skills.support.skill4": "Documentation Technique",
+                "skills.technologies": "Technologies Maîtrisées",
+                
+                // About
+                "about.title": "À Propos",
+                "about.description1": "Professionnel IT passionné par la création de solutions d'infrastructure sécurisées, fiables et efficaces. Mon approche combine expertise technique avec attention aux objectifs business et besoins utilisateurs.",
+                "about.description2": "Je me spécialise en sécurité réseau, administration système et déploiement d'infrastructure, avec expérience pratique en environnements d'entreprise et opérations cybersécurité.",
+                "about.contact_btn": "Me Contacter",
+                
+                // Contact
+                "contact.title": "Contactez-moi",
+                "contact.subtitle": "Intéressé à discuter opportunités ou projets techniques? N'hésitez pas à me contacter.",
+                "contact.info_title": "Informations de Contact",
+                "contact.name": "Nom",
+                "contact.email": "Courriel",
+                "contact.location": "Localisation",
+                "contact.location_text": "Ouvert aux opportunités",
+                "contact.resume": "CV",
+                "contact.resume_text": "Téléchargez mon CV complet avec expérience détaillée",
+                "contact.contact_options": "Options de Contact",
+                "contact.email_title": "Envoyez-moi un email",
+                "contact.email_text": "Pour des demandes détaillées ou discussions de projet, envoyez-moi un email.",
+                "contact.send_email": "Envoyer Email",
+                "contact.whatsapp_title": "Message WhatsApp",
+                "contact.whatsapp_text": "Pour des questions rapides ou planifier un appel, envoyez-moi un message WhatsApp.",
+                "contact.open_whatsapp": "Ouvrir WhatsApp",
+                
+                // Footer
+                "footer.tagline": "Technicien Réseau & Systèmes"
+            }
+        };
+    </script>
+
+    <script>
+        // Set default language to English
+        let currentLang = 'en';
+        
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const closeMenuButton = document.getElementById('close-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.querySelectorAll('#mobile-menu a');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+        
+        // Language switcher functionality
+        function setLanguage(lang) {
+            currentLang = lang;
+            
+            // Update active button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('bg-blue-100', 'text-blue-700');
+                btn.classList.add('text-gray-600', 'hover:text-blue-700');
+            });
+            
+            if (lang === 'en') {
+                document.getElementById('lang-en').classList.add('bg-blue-100', 'text-blue-700');
+                document.getElementById('lang-en').classList.remove('text-gray-600', 'hover:text-blue-700');
+                document.getElementById('lang-en-mobile').classList.add('bg-blue-100', 'text-blue-700');
+                document.getElementById('lang-en-mobile').classList.remove('text-gray-600', 'hover:text-blue-700');
+            } else {
+                document.getElementById('lang-fr').classList.add('bg-blue-100', 'text-blue-700');
+                document.getElementById('lang-fr').classList.remove('text-gray-600', 'hover:text-blue-700');
+                document.getElementById('lang-fr-mobile').classList.add('bg-blue-100', 'text-blue-700');
+                document.getElementById('lang-fr-mobile').classList.remove('text-gray-600', 'hover:text-blue-700');
+            }
+            
+            // Update all elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            
+            // Update page title
+            document.title = lang === 'en' 
+                ? 'Rahim Sekkai - Network & Systems Technician'
+                : 'Rahim Sekkai - Technicien Réseau & Systèmes';
+            
+            // Save language preference to localStorage
+            localStorage.setItem('preferredLang', lang);
+        }
+        
+        // Initialize language from localStorage or default to English
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('preferredLang') || 'en';
+            setLanguage(savedLang);
+            
+            // Add click events to language buttons
+            document.getElementById('lang-en').addEventListener('click', () => setLanguage('en'));
+            document.getElementById('lang-fr').addEventListener('click', () => setLanguage('fr'));
+            document.getElementById('lang-en-mobile').addEventListener('click', () => {
+                setLanguage('en');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            document.getElementById('lang-fr-mobile').addEventListener('click', () => {
+                setLanguage('fr');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+        
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Highlight active section in navigation
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const scrollPosition = window.scrollY + 100;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                const sectionId = section.getAttribute('id');
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.classList.remove('text-blue-700');
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('text-blue-700');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

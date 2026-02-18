@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sécurité Réseau & Accès Distant | Rahim Sekkai</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e40af;
+            --secondary: #0f172a;
+            --accent: #3b82f6;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1f2937;
+            overflow-x: hidden;
+        }
+        .hero-title {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+        }
+        .section-title {
+            font-size: clamp(1.75rem, 3vw, 2.5rem);
+            font-weight: 800;
+            line-height: 1.2;
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .mobile-menu {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        .language-switcher {
+            position: relative;
+            z-index: 1000;
+        }
+        .whatsapp-button {
+            background-color: #25D366;
+            transition: all 0.3s ease;
+        }
+        .whatsapp-button:hover {
+            background-color: #128C7E;
+            transform: translateY(-2px);
+        }
+        .back-button {
+            transition: all 0.3s ease;
+        }
+        .back-button:hover {
+            transform: translateX(-5px);
+        }
+        .feature-card {
+            transition: transform 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        .vpn-diagram {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        @media (max-width: 768px) {
+            .config-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (min-width: 769px) {
+            .config-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <header class="sticky top-0 z-40 bg-white shadow-md">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-blue-800">Rahim<span class="text-blue-600">Sekkai</span></a>
+            
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="index.html#home" class="nav-link text-gray-700 font-medium hover:text-blue-700" data-i18n="nav.home">Home</a>
+                <a href="index.html#projects" class="nav-link text-gray-700 font-medium hover:text-blue-700" data-i18n="nav.projects">Projects</a>
+                <a href="index.html#skills" class="nav-link text-gray-700 font-medium hover:text-blue-700" data-i18n="nav.skills">Skills</a>
+                <a href="index.html#about" class="nav-link text-gray-700 font-medium hover:text-blue-700" data-i18n="nav.about">About</a>
+                <a href="index.html#contact" class="nav-link text-gray-700 font-medium hover:text-blue-700" data-i18n="nav.contact">Contact</a>
+                <!-- Two CV buttons -->
+                <a href="/cv/rahim_sekkai_cv_fr.pdf" download class="bg-blue-700 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-800 transition text-sm">CV FR</a>
+                <a href="/cv/rahim_sekkai_cv_en.pdf" download class="bg-blue-700 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-800 transition text-sm">CV EN</a>
+                
+                <!-- Language Switcher -->
+                <div class="language-switcher flex items-center space-x-2">
+                    <button id="lang-en" class="lang-btn px-3 py-1 rounded-full font-medium bg-blue-100 text-blue-700">EN</button>
+                    <button id="lang-fr" class="lang-btn px-3 py-1 rounded-full font-medium text-gray-600 hover:text-blue-700">FR</button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="md:hidden text-gray-700">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </nav>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu md:hidden fixed inset-0 bg-white z-40 p-8">
+            <div class="flex justify-between items-center mb-10">
+                <a href="index.html" class="text-2xl font-bold text-blue-800">Rahim<span class="text-blue-600">Sekkai</span></a>
+                <button id="close-menu-button" class="text-gray-700">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            <div class="flex flex-col space-y-6">
+                <a href="index.html#home" class="text-xl font-medium text-gray-700 hover:text-blue-700 py-2" data-i18n="nav.home">Home</a>
+                <a href="index.html#projects" class="text-xl font-medium text-gray-700 hover:text-blue-700 py-2" data-i18n="nav.projects">Projects</a>
+                <a href="index.html#skills" class="text-xl font-medium text-gray-700 hover:text-blue-700 py-2" data-i18n="nav.skills">Skills</a>
+                <a href="index.html#about" class="text-xl font-medium text-gray-700 hover:text-blue-700 py-2" data-i18n="nav.about">About</a>
+                <a href="index.html#contact" class="text-xl font-medium text-gray-700 hover:text-blue-700 py-2" data-i18n="nav.contact">Contact</a>
+                <!-- Mobile CV buttons -->
+                <div class="flex space-x-4 mt-4">
+                    <a href="/cv/rahim_sekkai_cv_fr.pdf" download class="bg-blue-700 text-white px-5 py-3 rounded-md font-medium text-center hover:bg-blue-800 transition flex-1">CV FR</a>
+                    <a href="/cv/rahim_sekkai_cv_en.pdf" download class="bg-blue-700 text-white px-5 py-3 rounded-md font-medium text-center hover:bg-blue-800 transition flex-1">CV EN</a>
+                </div>
+                <!-- Language Switcher -->
+                <div class="language-switcher flex justify-center space-x-4 mt-4">
+                    <button id="lang-en-mobile" class="lang-btn px-4 py-2 rounded-full font-medium bg-blue-100 text-blue-700">EN</button>
+                    <button id="lang-fr-mobile" class="lang-btn px-4 py-2 rounded-full font-medium text-gray-600 hover:text-blue-700">FR</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Back Button -->
+    <div class="container mx-auto px-4 py-6">
+        <a href="index.html#projects" class="back-button inline-flex items-center text-blue-700 font-medium hover:text-blue-900">
+            <i class="fas fa-arrow-left mr-2"></i>
+            <span data-i18n="project.back">Back to Projects</span>
+        </a>
+    </div>
+
+    <!-- Project Hero -->
+    <section class="py-12 md:py-16 bg-gradient-to-r from-green-900 to-green-700 text-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <span class="inline-block bg-green-500 text-white text-sm font-bold px-4 py-1 rounded-full mb-4" data-i18n="projects.project2.tag">NETWORK SECURITY</span>
+                <h1 class="hero-title mb-6" data-i18n="projects.project2.title">Network Security & Remote Access (VPN + Firewall)</h1>
+                <p class="text-xl md:text-2xl text-green-100 mb-8 max-w-3xl" data-i18n="projects.project2.description">
+                    Implementation of secure access for remote employees and site interconnection.
+                </p>
+                <div class="flex flex-wrap gap-3 mb-8">
+                    <span class="bg-green-800 text-white text-sm px-4 py-2 rounded-full">Fortinet/pfSense</span>
+                    <span class="bg-green-800 text-white text-sm px-4 py-2 rounded-full">IPSec VPN</span>
+                    <span class="bg-green-800 text-white text-sm px-4 py-2 rounded-full">SSL VPN</span>
+                    <span class="bg-green-800 text-white text-sm px-4 py-2 rounded-full">Firewall Rules</span>
+                    <span class="bg-green-800 text-white text-sm px-4 py-2 rounded-full">Multi-factor Auth</span>
+                </div>
+                <div class="text-sm text-green-200">
+                    <span data-i18n="project.duration">Duration:</span> 6 weeks | <span data-i18n="project.status">Status:</span> <span data-i18n="project.completed">Completed</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Content -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="grid lg:grid-cols-3 gap-12">
+                    <!-- Main Content -->
+                    <div class="lg:col-span-2">
+                        <!-- Overview -->
+                        <div class="mb-12">
+                            <h2 class="section-title text-gray-900 mb-6" data-i18n="project.overview">Project Overview</h2>
+                            <p class="text-gray-700 mb-6" data-i18n="project2.overview1">
+                                A medium-sized enterprise with multiple branch offices and remote workers needed a secure, reliable solution for connecting remote locations and employees to the main corporate network.
+                            </p>
+                            <p class="text-gray-700" data-i18n="project2.overview2">
+                                The existing setup used basic port forwarding with no encryption, exposing the company to significant security risks and compliance issues.
+                            </p>
+                        </div>
+
+                        <!-- VPN Architecture -->
+                        <div class="mb-12">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-6" data-i18n="project2.architecture">VPN Architecture</h3>
+                            <div class="vpn-diagram rounded-2xl p-8 text-white mb-8">
+                                <div class="grid md:grid-cols-3 gap-6">
+                                    <div class="text-center">
+                                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                            <i class="fas fa-building text-2xl"></i>
+                                        </div>
+                                        <h4 class="font-bold" data-i18n="project2.hq">Headquarters</h4>
+                                        <p class="text-sm opacity-90" data-i18n="project2.hq_desc">FortiGate 60F</p>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                            <i class="fas fa-sync-alt text-2xl"></i>
+                                        </div>
+                                        <h4 class="font-bold" data-i18n="project2.ipsec">IPSec VPN</h4>
+                                        <p class="text-sm opacity-90" data-i18n="project2.ipsec_desc">Site-to-Site</p>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                            <i class="fas fa-home text-2xl"></i>
+                                        </div>
+                                        <h4 class="font-bold" data-i18n="project2.remote">Remote Offices</h4>
+                                        <p class="text-sm opacity-90" data-i18n="project2.remote_desc">3 branch locations</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Configuration Details -->
+                        <div class="mb-12">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-6" data-i18n="project2.configuration">Configuration Details</h3>
+                            <div class="config-grid grid gap-6">
+                                <div class="feature-card bg-gray-50 rounded-xl p-6">
+                                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                                        <i class="fas fa-lock text-blue-600 text-xl"></i>
+                                    </div>
+                                    <h4 class="font-bold text-gray-900 mb-2" data-i18n="project2.ipsec_config">IPSec VPN Setup</h4>
+                                    <ul class="text-sm text-gray-600 space-y-1">
+                                        <li>• AES-256 encryption</li>
+                                        <li>• SHA-256 authentication</li>
+                                        <li>• IKEv2 protocol</li>
+                                        <li>• Perfect Forward Secrecy</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="feature-card bg-gray-50 rounded-xl p-6">
+                                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                                        <i class="fas fa-shield-alt text-green-600 text-xl"></i>
+                                    </div>
+                                    <h4 class="font-bold text-gray-900 mb-2" data-i18n="project2.ssl_config">SSL VPN Configuration</h4>
+                                    <ul class="text-sm text-gray-600 space-y-1">
+                                        <li>• TLS 1.3 encryption</li>
+                                        <li>• Certificate-based auth</li>
+                                        <li>• Split tunneling</li>
+                                        <li>• 2FA integration</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="feature-card bg-gray-50 rounded-xl p-6">
+                                    <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+                                        <i class="fas fa-fire text-red-600 text-xl"></i>
+                                    </div>
+                                    <h4 class="font-bold text-gray-900 mb-2" data-i18n="project2.firewall_config">Firewall Rules</h4>
+                                    <ul class="text-sm text-gray-600 space-y-1">
+                                        <li>• Stateful inspection</li>
+                                        <li>• Application control</li>
+                                        <li>• Intrusion prevention</li>
+                                        <li>• Geo-IP blocking</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="feature-card bg-gray-50 rounded-xl p-6">
+                                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                                        <i class="fas fa-user-check text-purple-600 text-xl"></i>
+                                    </div>
+                                    <h4 class="font-bold text-gray-900 mb-2" data-i18n="project2.auth_config">Authentication</h4>
+                                    <ul class="text-sm text-gray-600 space-y-1">
+                                        <li>• LDAP integration</li>
+                                        <li>• RADIUS server</li>
+                                        <li>• Certificate auth</li>
+                                        <li>• Session timeout</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Implementation Steps -->
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-6" data-i18n="project2.implementation">Implementation Steps</h3>
+                            <div class="space-y-6">
+                                <div class="flex items-start">
+                                    <div class="w-8 h-8 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center mr-4 flex-shrink-0">1</div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-900 mb-1" data-i18n="project2.step1">Network Assessment</h4>
+                                        <p class="text-gray-600" data-i18n="project2.step1_desc">Analyzed current infrastructure, identified security gaps, and defined requirements for secure remote access.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="w-8 h-8 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center mr-4 flex-shrink-0">2</div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-900 mb-1" data-i18n="project2.step2">Hardware Selection</h4>
+                                        <p class="text-gray-600" data-i18n="project2.step2_desc">Selected appropriate FortiGate models for headquarters and branch offices based on user count and bandwidth requirements.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="w-8 h-8 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center mr-4 flex-shrink-0">3</div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-900 mb-1" data-i18n="project2.step3">VPN Configuration</h4>
+                                        <p class="text-gray-600" data-i18n="project2.step3_desc">Configured IPSec tunnels for site-to-site connections and SSL VPN for remote worker access.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="w-8 h-8 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center mr-4 flex-shrink-0">4</div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-900 mb-1" data-i18n="project2.step4">Security Policies</h4>
+                                        <p class="text-gray-600" data-i18n="project2.step4_desc">Implemented firewall rules, access controls, and monitoring policies to ensure secure traffic flow.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="w-8 h-8 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center mr-4 flex-shrink-0">5</div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-900 mb-1" data-i18n="project2.step5">Testing & Documentation</h4>
+                                        <p class="text-gray-600" data-i18n="project2.step5_desc">Performed extensive testing of all VPN connections and documented configurations for future reference.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar -->
+                    <div class="space-y-8">
+                        <!-- Technical Specifications -->
+                        <div class="bg-gray-50 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-bold text-gray-900 mb-4" data-i18n="project.tech_specs">Technical Specifications</h3>
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <i class="fas fa-microchip text-green-600 mt-1 mr-3"></i>
+                                    <span><strong data-i18n="project2.firewall_model">Firewall:</strong> FortiGate 60F</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-tachometer-alt text-green-600 mt-1 mr-3"></i>
+                                    <span><strong data-i18n="project2.throughput">Throughput:</strong> 1 Gbps IPSec VPN</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-user-friends text-green-600 mt-1 mr-3"></i>
+                                    <span><strong data-i18n="project2.concurrent">Concurrent VPN:</strong> 200 users</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-sitemap text-green-600 mt-1 mr-3"></i>
+                                    <span><strong data-i18n="project2.sites">Connected Sites:</strong> 4 locations</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-clock text-green-600 mt-1 mr-3"></i>
+                                    <span><strong data-i18n="project2.uptime">Uptime:</strong> 99.99%</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Skills Demonstrated -->
+                        <div class="bg-green-50 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-bold text-gray-900 mb-4" data-i18n="project.skills">Skills Demonstrated</h3>
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span data-i18n="projects.project2.skill1">Secure remote access implementation</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span data-i18n="projects.project2.skill2">Firewall configuration and management</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span data-i18n="projects.project2.skill3">Network traffic management and optimization</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span data-i18n="projects.project2.skill4">Connection monitoring and troubleshooting</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Results -->
+                        <div class="bg-blue-50 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-bold text-gray-900 mb-4" data-i18n="project.results">Results Achieved</h3>
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <i class="fas fa-shield-alt text-blue-600 mt-1 mr-3"></i>
+                                    <span data-i18n="project2.result1">100% encrypted remote access</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-bolt text-blue-600 mt-1 mr-3"></i>
+                                    <span data-i18n="project2.result2">50% faster connection times</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-chart-line text-blue-600 mt-1 mr-3"></i>
+                                    <span data-i18n="project2.result3">Zero security breaches post-implementation</span>
+                                </li>
+                                <!-- Removed the line "Support for 50+ remote workers" as requested -->
+                            </ul>
+                        </div>
+
+                        <!-- Screenshots -->
+                        <div class="bg-gray-100 rounded-xl p-6">
+                            <h3 class="text-xl font-bold text-gray-900 mb-4" data-i18n="project.screenshots">Configuration Screenshots</h3>
+                            <div class="space-y-4">
+                                <div class="bg-white rounded-lg p-4">
+                                    <div class="h-32 bg-gradient-to-r from-blue-400 to-blue-600 rounded flex items-center justify-center">
+                                        <i class="fas fa-laptop-code text-white text-4xl"></i>
+                                    </div>
+                                    <p class="text-center text-sm text-gray-600 mt-2" data-i18n="project2.screen1">VPN Dashboard</p>
+                                </div>
+                                <div class="bg-white rounded-lg p-4">
+                                    <div class="h-32 bg-gradient-to-r from-green-400 to-green-600 rounded flex items-center justify-center">
+                                        <i class="fas fa-list-alt text-white text-4xl"></i>
+                                    </div>
+                                    <p class="text-center text-sm text-gray-600 mt-2" data-i18n="project2.screen2">Firewall Rules</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technologies Used -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="section-title text-center text-gray-900 mb-12" data-i18n="project.technologies">Technologies Used</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                    <div class="tech-logo flex flex-col items-center p-4">
+                        <i class="fas fa-shield-virus text-4xl text-blue-600 mb-2"></i>
+                        <span class="text-sm font-medium">Fortinet</span>
+                    </div>
+                    <div class="tech-logo flex flex-col items-center p-4">
+                        <i class="fas fa-fire text-4xl text-orange-500 mb-2"></i>
+                        <span class="text-sm font-medium">pfSense</span>
+                    </div>
+                    <div class="tech-logo flex flex-col items-center p-4">
+                        <i class="fas fa-lock text-4xl text-green-600 mb-2"></i>
+                        <span class="text-sm font-medium">IPSec</span>
+                    </div>
+                    <div class="tech-logo flex flex-col items-center p-4">
+                        <i class="fas fa-key text-4xl text-purple-600 mb-2"></i>
+                        <span class="text-sm font-medium">SSL/TLS</span>
+                    </div>
+                    <div class="tech-logo flex flex-col items-center p-4">
+                        <i class="fas fa-user-lock text-4xl text-red-500 mb-2"></i>
+                        <span class="text-sm font-medium">2FA</span>
+                    </div>
+                    <div class="tech-logo flex flex-col items-center p-4">
+                        <i class="fas fa-chart-bar text-4xl text-teal-500 mb-2"></i>
+                        <span class="text-sm font-medium">Monitoring</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section class="py-16 bg-gradient-to-r from-green-900 to-green-700 text-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="section-title mb-6" data-i18n="project2.need_vpn">Need Secure Remote Access?</h2>
+                <p class="text-xl text-green-100 mb-8" data-i18n="project2.contact_cta">
+                    Whether you need VPN setup, firewall configuration, or network security assessment, I can help secure your remote connections.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="index.html#contact" class="bg-white text-green-800 px-8 py-3 rounded-md font-bold text-lg hover:bg-green-50 transition" data-i18n="project.contact_me">Contact Me</a>
+                    <a href="projet-infrastructure-sme.html" class="border-2 border-white text-white px-8 py-3 rounded-md font-bold text-lg hover:bg-white/10 transition">
+                        <i class="fas fa-arrow-left mr-2"></i> <span data-i18n="project.previous">Previous Project</span>
+                    </a>
+                    <a href="projet-monitoring-systemes.html" class="border-2 border-white text-white px-8 py-3 rounded-md font-bold text-lg hover:bg-white/10 transition">
+                        <span data-i18n="project.next">Next Project</span> <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-8 md:mb-0">
+                    <a href="index.html" class="text-2xl font-bold text-white">Rahim<span class="text-blue-400">Sekkai</span></a>
+                    <p class="mt-2 text-gray-400" data-i18n="footer.tagline">Network & Systems Technician</p>
+                </div>
+                <div class="flex space-x-6 mb-8 md:mb-0">
+                    <a href="mailto:contact@rahimsekkai.com" class="text-gray-400 hover:text-white text-xl">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <a href="https://wa.me/14181234567" target="_blank" class="text-gray-400 hover:text-white text-xl">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+                <div class="text-center md:text-right">
+                    <p class="text-gray-400">© 2026 Rahim Sekkai. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Translation Data -->
+    <script>
+        const translations = {
+            en: {
+                // Navigation
+                "nav.home": "Home",
+                "nav.projects": "Projects",
+                "nav.skills": "Skills",
+                "nav.about": "About",
+                "nav.contact": "Contact",
+                
+                // Project Specific
+                "project.back": "Back to Projects",
+                "project.duration": "Duration",
+                "project.status": "Status",
+                "project.completed": "Completed",
+                "project.overview": "Project Overview",
+                "project.tech_specs": "Technical Specifications",
+                "project.skills": "Skills Demonstrated",
+                "project.results": "Results Achieved",
+                "project.screenshots": "Configuration Screenshots",
+                "project.technologies": "Technologies Used",
+                "project.contact_me": "Contact Me",
+                "project.previous": "Previous Project",
+                "project.next": "Next Project",
+                
+                // Project 2 Specific
+                "projects.project2.tag": "NETWORK SECURITY",
+                "projects.project2.title": "Network Security & Remote Access (VPN + Firewall)",
+                "projects.project2.description": "Implementation of secure access for remote employees and site interconnection.",
+                "projects.project2.skill1": "Secure remote access implementation",
+                "projects.project2.skill2": "Firewall configuration and management",
+                "projects.project2.skill3": "Network traffic management and optimization",
+                "projects.project2.skill4": "Connection monitoring and troubleshooting",
+                
+                "project2.overview1": "A medium-sized enterprise with multiple branch offices and remote workers needed a secure, reliable solution for connecting remote locations and employees to the main corporate network.",
+                "project2.overview2": "The existing setup used basic port forwarding with no encryption, exposing the company to significant security risks and compliance issues.",
+                
+                "project2.architecture": "VPN Architecture",
+                "project2.hq": "Headquarters",
+                "project2.hq_desc": "FortiGate 60F",
+                "project2.ipsec": "IPSec VPN",
+                "project2.ipsec_desc": "Site-to-Site",
+                "project2.remote": "Remote Offices",
+                "project2.remote_desc": "3 branch locations",
+                
+                "project2.configuration": "Configuration Details",
+                "project2.ipsec_config": "IPSec VPN Setup",
+                "project2.ssl_config": "SSL VPN Configuration",
+                "project2.firewall_config": "Firewall Rules",
+                "project2.auth_config": "Authentication",
+                
+                "project2.implementation": "Implementation Steps",
+                "project2.step1": "Network Assessment",
+                "project2.step1_desc": "Analyzed current infrastructure, identified security gaps, and defined requirements for secure remote access.",
+                "project2.step2": "Hardware Selection",
+                "project2.step2_desc": "Selected appropriate FortiGate models for headquarters and branch offices based on user count and bandwidth requirements.",
+                "project2.step3": "VPN Configuration",
+                "project2.step3_desc": "Configured IPSec tunnels for site-to-site connections and SSL VPN for remote worker access.",
+                "project2.step4": "Security Policies",
+                "project2.step4_desc": "Implemented firewall rules, access controls, and monitoring policies to ensure secure traffic flow.",
+                "project2.step5": "Testing & Documentation",
+                "project2.step5_desc": "Performed extensive testing of all VPN connections and documented configurations for future reference.",
+                
+                "project2.firewall_model": "Firewall:",
+                "project2.throughput": "Throughput:",
+                "project2.concurrent": "Concurrent VPN:",
+                "project2.sites": "Connected Sites:",
+                "project2.uptime": "Uptime:",
+                
+                "project2.result1": "100% encrypted remote access",
+                "project2.result2": "50% faster connection times",
+                "project2.result3": "Zero security breaches post-implementation",
+                
+                "project2.screen1": "VPN Dashboard",
+                "project2.screen2": "Firewall Rules",
+                
+                "project2.need_vpn": "Need Secure Remote Access?",
+                "project2.contact_cta": "Whether you need VPN setup, firewall configuration, or network security assessment, I can help secure your remote connections.",
+                
+                // Footer
+                "footer.tagline": "Network & Systems Technician"
+            },
+            fr: {
+                // Navigation
+                "nav.home": "Accueil",
+                "nav.projects": "Projets",
+                "nav.skills": "Compétences",
+                "nav.about": "À Propos",
+                "nav.contact": "Contact",
+                
+                // Project Specific
+                "project.back": "Retour aux Projets",
+                "project.duration": "Durée",
+                "project.status": "Statut",
+                "project.completed": "Terminé",
+                "project.overview": "Aperçu du Projet",
+                "project.tech_specs": "Spécifications Techniques",
+                "project.skills": "Compétences Démonstrées",
+                "project.results": "Résultats Obtenus",
+                "project.screenshots": "Captures d'écran",
+                "project.technologies": "Technologies Utilisées",
+                "project.contact_me": "Me Contacter",
+                "project.previous": "Projet Précédent",
+                "project.next": "Projet Suivant",
+                
+                // Project 2 Specific
+                "projects.project2.tag": "SÉCURITÉ RÉSEAU",
+                "projects.project2.title": "Sécurisation Réseau & Accès Distant (VPN + Firewall)",
+                "projects.project2.description": "Mise en place d'un accès sécurisé pour employés distants et interconnexion de sites.",
+                "projects.project2.skill1": "Implémentation d'accès distant sécurisé",
+                "projects.project2.skill2": "Configuration et gestion de firewall",
+                "projects.project2.skill3": "Gestion et optimisation du trafic réseau",
+                "projects.project2.skill4": "Surveillance et dépannage des connexions",
+                
+                "project2.overview1": "Une entreprise de taille moyenne avec plusieurs succursales et travailleurs à distance avait besoin d'une solution sécurisée et fiable pour connecter les sites distants et les employés au réseau principal de l'entreprise.",
+                "project2.overview2": "La configuration existante utilisait un simple port forwarding sans chiffrement, exposant l'entreprise à des risques de sécurité significatifs et des problèmes de conformité.",
+                
+                "project2.architecture": "Architecture VPN",
+                "project2.hq": "Siège Social",
+                "project2.hq_desc": "FortiGate 60F",
+                "project2.ipsec": "VPN IPSec",
+                "project2.ipsec_desc": "Site-à-Site",
+                "project2.remote": "Succursales",
+                "project2.remote_desc": "3 sites distants",
+                
+                "project2.configuration": "Détails de Configuration",
+                "project2.ipsec_config": "Configuration VPN IPSec",
+                "project2.ssl_config": "Configuration VPN SSL",
+                "project2.firewall_config": "Règles Firewall",
+                "project2.auth_config": "Authentification",
+                
+                "project2.implementation": "Étapes d'Implémentation",
+                "project2.step1": "Évaluation Réseau",
+                "project2.step1_desc": "Analyse de l'infrastructure actuelle, identification des failles de sécurité et définition des besoins pour un accès distant sécurisé.",
+                "project2.step2": "Sélection Matériel",
+                "project2.step2_desc": "Sélection des modèles FortiGate appropriés pour le siège et les succursales basée sur le nombre d'utilisateurs et les besoins en bande passante.",
+                "project2.step3": "Configuration VPN",
+                "project2.step3_desc": "Configuration des tunnels IPSec pour les connexions site-à-site et VPN SSL pour l'accès des travailleurs distants.",
+                "project2.step4": "Politiques de Sécurité",
+                "project2.step4_desc": "Implémentation des règles firewall, contrôles d'accès et politiques de monitoring pour assurer un flux de trafic sécurisé.",
+                "project2.step5": "Tests & Documentation",
+                "project2.step5_desc": "Tests approfondis de toutes les connexions VPN et documentation des configurations pour référence future.",
+                
+                "project2.firewall_model": "Firewall:",
+                "project2.throughput": "Débit:",
+                "project2.concurrent": "VPN simultanés:",
+                "project2.sites": "Sites connectés:",
+                "project2.uptime": "Disponibilité:",
+                
+                "project2.result1": "100% d'accès distant chiffré",
+                "project2.result2": "50% plus rapide pour les connexions",
+                "project2.result3": "Zéro brèche de sécurité post-implémentation",
+                
+                "project2.screen1": "Tableau de bord VPN",
+                "project2.screen2": "Règles Firewall",
+                
+                "project2.need_vpn": "Besoin d'un Accès Distant Sécurisé?",
+                "project2.contact_cta": "Que vous ayez besoin d'une configuration VPN, d'une configuration firewall ou d'une évaluation de sécurité réseau, je peux vous aider à sécuriser vos connexions distantes.",
+                
+                // Footer
+                "footer.tagline": "Technicien Réseau & Systèmes"
+            }
+        };
+    </script>
+
+    <script>
+        // Set default language to English
+        let currentLang = 'en';
+        
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const closeMenuButton = document.getElementById('close-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.querySelectorAll('#mobile-menu a');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+        
+        // Language switcher functionality
+        function setLanguage(lang) {
+            currentLang = lang;
+            
+            // Update active button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('bg-blue-100', 'text-blue-700');
+                btn.classList.add('text-gray-600', 'hover:text-blue-700');
+            });
+            
+            if (lang === 'en') {
+                document.getElementById('lang-en').classList.add('bg-blue-100', 'text-blue-700');
+                document.getElementById('lang-en').classList.remove('text-gray-600', 'hover:text-blue-700');
+                document.getElementById('lang-en-mobile').classList.add('bg-blue-100', 'text-blue-700');
+                document.getElementById('lang-en-mobile').classList.remove('text-gray-600', 'hover:text-blue-700');
+            } else {
+                document.getElementById('lang-fr').classList.add('bg-blue-100', 'text-blue-700');
+                document.getElementById('lang-fr').classList.remove('text-gray-600', 'hover:text-blue-700');
+                document.getElementById('lang-fr-mobile').classList.add('bg-blue-100', 'text-blue-700');
+                document.getElementById('lang-fr-mobile').classList.remove('text-gray-600', 'hover:text-blue-700');
+            }
+            
+            // Update all elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            
+            // Update page title
+            document.title = lang === 'en' 
+                ? 'Network Security & Remote Access | Rahim Sekkai'
+                : 'Sécurité Réseau & Accès Distant | Rahim Sekkai';
+            
+            // Save language preference to localStorage
+            localStorage.setItem('preferredLang', lang);
+        }
+        
+        // Initialize language from localStorage or default to English
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('preferredLang') || 'en';
+            setLanguage(savedLang);
+            
+            // Add click events to language buttons
+            document.getElementById('lang-en').addEventListener('click', () => setLanguage('en'));
+            document.getElementById('lang-fr').addEventListener('click', () => setLanguage('fr'));
+            document.getElementById('lang-en-mobile').addEventListener('click', () => {
+                setLanguage('en');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            document.getElementById('lang-fr-mobile').addEventListener('click', () => {
+                setLanguage('fr');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+    </script>
+</body>
+</html>

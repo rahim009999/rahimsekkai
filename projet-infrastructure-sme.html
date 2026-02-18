@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infrastructure IT Complète PME | Rahim Sekkai</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e40af;
+            --secondary: #0f172a;
+            --accent: #3b82f6;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1f2937;
+            overflow-x: hidden;
+        }
+        .hero-title {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+        }
+        .section-title {
+            font-size: clamp(1.75rem, 3vw, 2.5rem);
+            font-weight: 800;
+            line-height: 1.2;
+        }
+        .project-image {
+            transition: transform 0.3s ease;
+        }
+        .project-image:hover {
+            transform: scale(1.02);
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .mobile-menu {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--primary);
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 12px;
+            width: 2px;
+            height: calc(100% + 20px);
+            background-color: #e5e7eb;
+        }
+        .timeline-item:last-child::after {
+            display: none;
+        }
+        .language-switcher {
+            position: relative;
+            z-index: 1000;
+        }
+        .whatsapp-button {
+            background-color: #25D366;
+            transition: all 0.3s ease;
+        }
+        .whatsapp-button:hover {
+            background-color: #128C7E;
+            transform: translateY(-2px);
+        }
+        .back-button {
+            transition: all 0.3s ease;
+        }
+        .back-button:hover {
+            transform: translateX(-5px);
+        }
+        @media (max-width: 768px) {
+            .project-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .project-gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (min-width: 1025px) {
+            .project-gallery {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <header class="sticky top-0 z-40 bg-white shadow-md">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-blue-800">Rahim<span class="text-blue-600">Sekkai</span></a>
+            
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="index.html#home" class="nav-link text-gray-700 font-medium hover:text-blue-700" data-i18n="nav.home">Home</a>
+                <a href="index.html#projects" class="nav-link text-gray-700 font-medium hover:text-blue-700" data-i18n="nav.projects">Projects</a>
+                <a href="index.html#skills" class="nav-link text-gray-700 font-medium hover:text-blue-700" data-i18n="nav.skills">Skills</a>
+                <a href="index.html#about" class="nav-link text-gray-700 font-medium hover:text-blue-700" data-i18n="nav.about">About</a>
+                <a href="index.html#contact" class="nav-link text-gray-700 font-medium hover:text-blue-700" data-i18n="nav.contact">Contact</a>
+                <!-- Two CV buttons -->
+                <a href="/cv/rahim_sekkai_cv_fr.pdf" download class="bg-blue-700 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-800 transition text-sm">CV FR</a>
+                <a href="/cv/rahim_sekkai_cv_en.pdf" download class="bg-blue-700 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-800 transition text-sm">CV EN</a>
+                
+                <!-- Language Switcher -->
+                <div class="language-switcher flex items-center space-x-2">
+                    <button id="lang-en" class="lang-btn px-3 py-1 rounded-full font-medium bg-blue-100 text-blue-700">EN</button>
+                    <button id="lang-fr" class="lang-btn px-3 py-1 rounded-full font-medium text-gray-600 hover:text-blue-700">FR</button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="md:hidden text-gray-700">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </nav>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu md:hidden fixed inset-0 bg-white z-40 p-8">
+            <div class="flex justify-between items-center mb-10">
+                <a href="index.html" class="text-2xl font-bold text-blue-800">Rahim<span class="text-blue-600">Sekkai</span></a>
+                <button id="close-menu-button" class="text-gray-700">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            <div class="flex flex-col space-y-6">
+                <a href="index.html#home" class="text-xl font-medium text-gray-700 hover:text-blue-700 py-2" data-i18n="nav.home">Home</a>
+                <a href="index.html#projects" class="text-xl font-medium text-gray-700 hover:text-blue-700 py-2" data-i18n="nav.projects">Projects</a>
+                <a href="index.html#skills" class="text-xl font-medium text-gray-700 hover:text-blue-700 py-2" data-i18n="nav.skills">Skills</a>
+                <a href="index.html#about" class="text-xl font-medium text-gray-700 hover:text-blue-700 py-2" data-i18n="nav.about">About</a>
+                <a href="index.html#contact" class="text-xl font-medium text-gray-700 hover:text-blue-700 py-2" data-i18n="nav.contact">Contact</a>
+                <!-- Mobile CV buttons -->
+                <div class="flex space-x-4 mt-4">
+                    <a href="/cv/rahim_sekkai_cv_fr.pdf" download class="bg-blue-700 text-white px-5 py-3 rounded-md font-medium text-center hover:bg-blue-800 transition flex-1">CV FR</a>
+                    <a href="/cv/rahim_sekkai_cv_en.pdf" download class="bg-blue-700 text-white px-5 py-3 rounded-md font-medium text-center hover:bg-blue-800 transition flex-1">CV EN</a>
+                </div>
+                <!-- Language Switcher -->
+                <div class="language-switcher flex justify-center space-x-4 mt-4">
+                    <button id="lang-en-mobile" class="lang-btn px-4 py-2 rounded-full font-medium bg-blue-100 text-blue-700">EN</button>
+                    <button id="lang-fr-mobile" class="lang-btn px-4 py-2 rounded-full font-medium text-gray-600 hover:text-blue-700">FR</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Back Button -->
+    <div class="container mx-auto px-4 py-6">
+        <a href="index.html#projects" class="back-button inline-flex items-center text-blue-700 font-medium hover:text-blue-900">
+            <i class="fas fa-arrow-left mr-2"></i>
+            <span data-i18n="project.back">Back to Projects</span>
+        </a>
+    </div>
+
+    <!-- Project Hero -->
+    <section class="py-12 md:py-16 bg-gradient-to-r from-blue-900 to-blue-700 text-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <span class="inline-block bg-yellow-500 text-white text-sm font-bold px-4 py-1 rounded-full mb-4" data-i18n="projects.project1.tag">KEY PROJECT</span>
+                <h1 class="hero-title mb-6" data-i18n="projects.project1.title">Complete SME IT Infrastructure</h1>
+                <p class="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl" data-i18n="projects.project1.description">
+                    Design and deployment of a complete network and system infrastructure for a 30-user SME.
+                </p>
+                <div class="flex flex-wrap gap-3 mb-8">
+                    <span class="bg-blue-800 text-white text-sm px-4 py-2 rounded-full">Windows Server 2019</span>
+                    <span class="bg-blue-800 text-white text-sm px-4 py-2 rounded-full">Active Directory</span>
+                    <span class="bg-blue-800 text-white text-sm px-4 py-2 rounded-full">DNS/DHCP</span>
+                    <span class="bg-blue-800 text-white text-sm px-4 py-2 rounded-full">VLAN</span>
+                    <span class="bg-blue-800 text-white text-sm px-4 py-2 rounded-full">Fortinet/pfSense</span>
+                </div>
+                <div class="text-sm text-blue-200">
+                    <span data-i18n="project.duration">Duration:</span> 3 months | <span data-i18n="project.status">Status:</span> <span data-i18n="project.completed">Completed</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Overview -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="grid md:grid-cols-3 gap-12">
+                    <!-- Left Column -->
+                    <div class="md:col-span-2">
+                        <h2 class="section-title text-gray-900 mb-8" data-i18n="project.overview">Project Overview</h2>
+                        
+                        <div class="mb-10">
+                            <h3 class="text-xl font-bold text-gray-900 mb-4" data-i18n="project.context">Context & Challenge</h3>
+                            <p class="text-gray-700 mb-4" data-i18n="project1.context1">
+                                A growing SME with 30 employees needed to migrate from a basic peer-to-peer network to a professional IT infrastructure that could support business growth, ensure data security, and provide reliable connectivity.
+                            </p>
+                            <p class="text-gray-700" data-i18n="project1.context2">
+                                The company had no centralized user management, no network segmentation, and was experiencing frequent connectivity issues and security vulnerabilities.
+                            </p>
+                        </div>
+                        
+                        <div class="mb-10">
+                            <h3 class="text-xl font-bold text-gray-900 mb-4" data-i18n="project.solution">Solution Implemented</h3>
+                            <ul class="space-y-4">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                    <span data-i18n="project1.solution1">Deployed Windows Server 2019 with Active Directory for centralized user and computer management</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                    <span data-i18n="project1.solution2">Implemented VLAN segmentation to separate users, management, and IT departments</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                    <span data-i18n="project1.solution3">Configured DNS and DHCP services for automatic IP management and name resolution</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                    <span data-i18n="project1.solution4">Set up pfSense firewall with security policies and traffic monitoring</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                    <span data-i18n="project1.solution5">Created Group Policy Objects (GPO) for standardized workstation configuration</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                    <span data-i18n="project1.solution6">Implemented backup and disaster recovery procedures</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Project Gallery -->
+                        <div class="mb-10">
+                            <h3 class="text-xl font-bold text-gray-900 mb-6" data-i18n="project.gallery">Project Documentation</h3>
+                            <div class="project-gallery grid gap-6">
+                                <div class="bg-gray-100 rounded-xl overflow-hidden shadow-lg">
+                                    <div class="h-64 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                                        <i class="fas fa-network-wired text-white text-6xl"></i>
+                                    </div>
+                                    <div class="p-6">
+                                        <h4 class="font-bold text-gray-900 mb-2" data-i18n="project1.diagram">Network Diagram</h4>
+                                        <p class="text-gray-600 text-sm" data-i18n="project1.diagram_desc">Visual representation of the complete infrastructure architecture</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-gray-100 rounded-xl overflow-hidden shadow-lg">
+                                    <div class="h-64 bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
+                                        <i class="fas fa-sitemap text-white text-6xl"></i>
+                                    </div>
+                                    <div class="p-6">
+                                        <h4 class="font-bold text-gray-900 mb-2" data-i18n="project1.ad">AD Structure</h4>
+                                        <p class="text-gray-600 text-sm" data-i18n="project1.ad_desc">Active Directory organizational units and user hierarchy</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-gray-100 rounded-xl overflow-hidden shadow-lg">
+                                    <div class="h-64 bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center">
+                                        <i class="fas fa-shield-alt text-white text-6xl"></i>
+                                    </div>
+                                    <div class="p-6">
+                                        <h4 class="font-bold text-gray-900 mb-2" data-i18n="project1.security">Security Policies</h4>
+                                        <p class="text-gray-600 text-sm" data-i18n="project1.security_desc">Firewall rules and security configuration documentation</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Column -->
+                    <div class="space-y-8">
+                        <!-- Technical Details -->
+                        <div class="bg-gray-50 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-bold text-gray-900 mb-4" data-i18n="project.tech_details">Technical Details</h3>
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <i class="fas fa-server text-blue-600 mt-1 mr-3"></i>
+                                    <span data-i18n="project1.server">Windows Server 2019 Standard</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-users-cog text-blue-600 mt-1 mr-3"></i>
+                                    <span data-i18n="project1.users">Managed user permissions and access control for over 10 users using Active Directory 2019.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-network-wired text-blue-600 mt-1 mr-3"></i>
+                                    <span data-i18n="project1.vlans">3 VLANs (Users/IT/Management)</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-fire text-blue-600 mt-1 mr-3"></i>
+                                    <span data-i18n="project1.firewall">pfSense firewall with 50+ rules</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-hdd text-blue-600 mt-1 mr-3"></i>
+                                    <span data-i18n="project1.storage">4TB RAID 5 storage</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-exchange-alt text-blue-600 mt-1 mr-3"></i>
+                                    <span data-i18n="project1.switch">Managed 48-port switch</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Skills Demonstrated -->
+                        <div class="bg-blue-50 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-bold text-gray-900 mb-4" data-i18n="project.skills">Skills Demonstrated</h3>
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span data-i18n="projects.project1.skill1">AD administration and user/rights management</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span data-i18n="projects.project1.skill2">Network segmentation (Users/IT/Management VLANs)</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span data-i18n="projects.project1.skill3">Basic enterprise security implementation</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                    <span data-i18n="projects.project1.skill4">Professional documentation and procedures</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Results -->
+                        <div class="bg-green-50 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-bold text-gray-900 mb-4" data-i18n="project.results">Results Achieved</h3>
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <i class="fas fa-chart-line text-green-600 mt-1 mr-3"></i>
+                                    <span data-i18n="project1.result1">99.9% network uptime achieved</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-user-shield text-green-600 mt-1 mr-3"></i>
+                                    <span data-i18n="project1.result2">80% reduction in security incidents</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-clock text-green-600 mt-1 mr-3"></i>
+                                    <span data-i18n="project1.result3">50% faster user provisioning</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-file-alt text-green-600 mt-1 mr-3"></i>
+                                    <span data-i18n="project1.result4">Complete documentation delivered</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Implementation Timeline -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="section-title text-center text-gray-900 mb-12" data-i18n="project.timeline">Implementation Timeline</h2>
+                <div class="grid md:grid-cols-4 gap-8">
+                    <div class="timeline-item">
+                        <h3 class="text-lg font-bold text-gray-900 mb-2" data-i18n="project1.phase1">Planning & Design</h3>
+                        <p class="text-gray-600" data-i18n="project1.phase1_desc">Requirements analysis and architecture design</p>
+                        <span class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded mt-3">Week 1-2</span>
+                    </div>
+                    <div class="timeline-item">
+                        <h3 class="text-lg font-bold text-gray-900 mb-2" data-i18n="project1.phase2">Server Deployment</h3>
+                        <p class="text-gray-600" data-i18n="project1.phase2_desc">Windows Server installation and AD configuration</p>
+                        <span class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded mt-3">Week 3-4</span>
+                    </div>
+                    <div class="timeline-item">
+                        <h3 class="text-lg font-bold text-gray-900 mb-2" data-i18n="project1.phase3">Network Setup</h3>
+                        <p class="text-gray-600" data-i18n="project1.phase3_desc">VLAN configuration and firewall implementation</p>
+                        <span class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded mt-3">Week 5-6</span>
+                    </div>
+                    <div class="timeline-item">
+                        <h3 class="text-lg font-bold text-gray-900 mb-2" data-i18n="project1.phase4">Testing & Documentation</h3>
+                        <p class="text-gray-600" data-i18n="project1.phase4_desc">System testing and documentation delivery</p>
+                        <span class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded mt-3">Week 7-8</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section class="py-16 bg-gradient-to-r from-blue-900 to-blue-700 text-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="section-title mb-6" data-i18n="project.interest">Interested in a Similar Project?</h2>
+                <p class="text-xl text-blue-100 mb-8" data-i18n="project.contact_cta">
+                    Contact me to discuss your infrastructure needs and how I can help build a secure, reliable IT environment for your organization.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="index.html#contact" class="bg-white text-blue-800 px-8 py-3 rounded-md font-bold text-lg hover:bg-blue-50 transition" data-i18n="project.contact_me">Contact Me</a>
+                    <a href="index.html#projects" class="border-2 border-white text-white px-8 py-3 rounded-md font-bold text-lg hover:bg-white/10 transition" data-i18n="project.view_all">View All Projects</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-8 md:mb-0">
+                    <a href="index.html" class="text-2xl font-bold text-white">Rahim<span class="text-blue-400">Sekkai</span></a>
+                    <p class="mt-2 text-gray-400" data-i18n="footer.tagline">Network & Systems Technician</p>
+                </div>
+                <div class="flex space-x-6 mb-8 md:mb-0">
+                    <a href="mailto:contact@rahimsekkai.com" class="text-gray-400 hover:text-white text-xl">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <a href="https://wa.me/14181234567" target="_blank" class="text-gray-400 hover:text-white text-xl">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+                <div class="text-center md:text-right">
+                    <p class="text-gray-400">© 2026 Rahim Sekkai. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Translation Data -->
+    <script>
+        const translations = {
+            en: {
+                // Navigation
+                "nav.home": "Home",
+                "nav.projects": "Projects",
+                "nav.skills": "Skills",
+                "nav.about": "About",
+                "nav.contact": "Contact",
+                
+                // Project Specific
+                "project.back": "Back to Projects",
+                "project.duration": "Duration",
+                "project.status": "Status",
+                "project.completed": "Completed",
+                "project.overview": "Project Overview",
+                "project.context": "Context & Challenge",
+                "project.solution": "Solution Implemented",
+                "project.gallery": "Project Documentation",
+                "project.tech_details": "Technical Details",
+                "project.skills": "Skills Demonstrated",
+                "project.results": "Results Achieved",
+                "project.timeline": "Implementation Timeline",
+                "project.interest": "Interested in a Similar Project?",
+                "project.contact_cta": "Contact me to discuss your infrastructure needs and how I can help build a secure, reliable IT environment for your organization.",
+                "project.contact_me": "Contact Me",
+                "project.view_all": "View All Projects",
+                
+                // Project 1 Specific
+                "projects.project1.tag": "KEY PROJECT",
+                "projects.project1.title": "Complete SME IT Infrastructure",
+                "projects.project1.description": "Design and deployment of a complete network and system infrastructure for a 30-user SME.",
+                "projects.project1.skill1": "AD administration and user/rights management",
+                "projects.project1.skill2": "Network segmentation (Users/IT/Management VLANs)",
+                "projects.project1.skill3": "Basic enterprise security implementation",
+                "projects.project1.skill4": "Professional documentation and procedures",
+                "projects.project1.show1": "Network Diagram",
+                "projects.project1.show1_desc": "Visual infrastructure overview",
+                "projects.project1.show2": "AD Structure + GPO",
+                "projects.project1.show2_desc": "Organization and policies",
+                
+                "project1.context1": "A growing SME with 30 employees needed to migrate from a basic peer-to-peer network to a professional IT infrastructure that could support business growth, ensure data security, and provide reliable connectivity.",
+                "project1.context2": "The company had no centralized user management, no network segmentation, and was experiencing frequent connectivity issues and security vulnerabilities.",
+                
+                "project1.solution1": "Deployed Windows Server 2019 with Active Directory for centralized user and computer management",
+                "project1.solution2": "Implemented VLAN segmentation to separate users, management, and IT departments",
+                "project1.solution3": "Configured DNS and DHCP services for automatic IP management and name resolution",
+                "project1.solution4": "Set up pfSense firewall with security policies and traffic monitoring",
+                "project1.solution5": "Created Group Policy Objects (GPO) for standardized workstation configuration",
+                "project1.solution6": "Implemented backup and disaster recovery procedures",
+                
+                "project1.diagram": "Network Diagram",
+                "project1.diagram_desc": "Visual representation of the complete infrastructure architecture",
+                "project1.ad": "AD Structure",
+                "project1.ad_desc": "Active Directory organizational units and user hierarchy",
+                "project1.security": "Security Policies",
+                "project1.security_desc": "Firewall rules and security configuration documentation",
+                
+                "project1.server": "Windows Server 2019 Standard",
+                "project1.users": "Managed user permissions and access control for over 10 users using Active Directory 2019.",
+                "project1.vlans": "3 VLANs (Users/IT/Management)",
+                "project1.firewall": "pfSense firewall with 50+ rules",
+                "project1.storage": "4TB RAID 5 storage",
+                "project1.switch": "Managed 48-port switch",
+                
+                "project1.result1": "99.9% network uptime achieved",
+                "project1.result2": "80% reduction in security incidents",
+                "project1.result3": "50% faster user provisioning",
+                "project1.result4": "Complete documentation delivered",
+                
+                "project1.phase1": "Planning & Design",
+                "project1.phase1_desc": "Requirements analysis and architecture design",
+                "project1.phase2": "Server Deployment",
+                "project1.phase2_desc": "Windows Server installation and AD configuration",
+                "project1.phase3": "Network Setup",
+                "project1.phase3_desc": "VLAN configuration and firewall implementation",
+                "project1.phase4": "Testing & Documentation",
+                "project1.phase4_desc": "System testing and documentation delivery",
+                
+                // Footer
+                "footer.tagline": "Network & Systems Technician"
+            },
+            fr: {
+                // Navigation
+                "nav.home": "Accueil",
+                "nav.projects": "Projets",
+                "nav.skills": "Compétences",
+                "nav.about": "À Propos",
+                "nav.contact": "Contact",
+                
+                // Project Specific
+                "project.back": "Retour aux Projets",
+                "project.duration": "Durée",
+                "project.status": "Statut",
+                "project.completed": "Terminé",
+                "project.overview": "Aperçu du Projet",
+                "project.context": "Contexte & Défi",
+                "project.solution": "Solution Implémentée",
+                "project.gallery": "Documentation du Projet",
+                "project.tech_details": "Détails Techniques",
+                "project.skills": "Compétences Démonstrées",
+                "project.results": "Résultats Obtenus",
+                "project.timeline": "Chronologie d'Implémentation",
+                "project.interest": "Intéressé par un Projet Similaire?",
+                "project.contact_cta": "Contactez-moi pour discuter de vos besoins d'infrastructure et comment je peux aider à construire un environnement IT sécurisé et fiable pour votre organisation.",
+                "project.contact_me": "Me Contacter",
+                "project.view_all": "Voir Tous les Projets",
+                
+                // Project 1 Specific
+                "projects.project1.tag": "PROJET CLÉ",
+                "projects.project1.title": "Infrastructure IT Complète PME",
+                "projects.project1.description": "Conception et déploiement d'une infrastructure réseau et système complète pour une PME de 30 utilisateurs.",
+                "projects.project1.skill1": "Administration AD et gestion utilisateurs/droits",
+                "projects.project1.skill2": "Segmentation réseau (VLAN Utilisateurs/IT/Gestion)",
+                "projects.project1.skill3": "Implémentation sécurité d'entreprise basique",
+                "projects.project1.skill4": "Documentation et procédures professionnelles",
+                "projects.project1.show1": "Schéma Réseau",
+                "projects.project1.show1_desc": "Vue d'ensemble infrastructure",
+                "projects.project1.show2": "Structure AD + GPO",
+                "projects.project1.show2_desc": "Organisation et politiques",
+                
+                "project1.context1": "Une PME en croissance avec 30 employés avait besoin de migrer d'un réseau pair-à-pair basique vers une infrastructure IT professionnelle pouvant supporter la croissance de l'entreprise, assurer la sécurité des données et fournir une connectivité fiable.",
+                "project1.context2": "L'entreprise n'avait pas de gestion centralisée des utilisateurs, pas de segmentation réseau, et connaissait des problèmes de connectivité fréquents et des vulnérabilités de sécurité.",
+                
+                "project1.solution1": "Déploiement de Windows Server 2019 avec Active Directory pour une gestion centralisée des utilisateurs et ordinateurs",
+                "project1.solution2": "Implémentation de segmentation VLAN pour séparer utilisateurs, direction et département IT",
+                "project1.solution3": "Configuration des services DNS et DHCP pour la gestion automatique d'IP et la résolution de noms",
+                "project1.solution4": "Installation du firewall pfSense avec politiques de sécurité et monitoring du trafic",
+                "project1.solution5": "Création d'Objets de Stratégie de Groupe (GPO) pour une configuration standardisée des postes de travail",
+                "project1.solution6": "Mise en place de procédures de sauvegarde et reprise après sinistre",
+                
+                "project1.diagram": "Schéma Réseau",
+                "project1.diagram_desc": "Représentation visuelle de l'architecture d'infrastructure complète",
+                "project1.ad": "Structure AD",
+                "project1.ad_desc": "Unités organisationnelles Active Directory et hiérarchie utilisateurs",
+                "project1.security": "Politiques de Sécurité",
+                "project1.security_desc": "Documentation des règles firewall et configuration de sécurité",
+                
+                "project1.server": "Windows Server 2019 Standard",
+                "project1.users": "Gestion des autorisations utilisateurs et contrôle d'accès pour plus de 10 utilisateurs avec Active Directory 2019.",
+                "project1.vlans": "3 VLANs (Utilisateurs/IT/Direction)",
+                "project1.firewall": "Firewall pfSense avec 50+ règles",
+                "project1.storage": "Stockage RAID 5 4TB",
+                "project1.switch": "Switch managé 48 ports",
+                
+                "project1.result1": "99.9% de disponibilité réseau atteinte",
+                "project1.result2": "80% de réduction des incidents de sécurité",
+                "project1.result3": "50% plus rapide pour l'approvisionnement des utilisateurs",
+                "project1.result4": "Documentation complète livrée",
+                
+                "project1.phase1": "Planification & Conception",
+                "project1.phase1_desc": "Analyse des besoins et conception de l'architecture",
+                "project1.phase2": "Déploiement Serveur",
+                "project1.phase2_desc": "Installation Windows Server et configuration AD",
+                "project1.phase3": "Configuration Réseau",
+                "project1.phase3_desc": "Configuration VLAN et implémentation firewall",
+                "project1.phase4": "Tests & Documentation",
+                "project1.phase4_desc": "Tests système et livraison documentation",
+                
+                // Footer
+                "footer.tagline": "Technicien Réseau & Systèmes"
+            }
+        };
+    </script>
+
+    <script>
+        // Set default language to English
+        let currentLang = 'en';
+        
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const closeMenuButton = document.getElementById('close-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.querySelectorAll('#mobile-menu a');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+        
+        // Language switcher functionality
+        function setLanguage(lang) {
+            currentLang = lang;
+            
+            // Update active button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('bg-blue-100', 'text-blue-700');
+                btn.classList.add('text-gray-600', 'hover:text-blue-700');
+            });
+            
+            if (lang === 'en') {
+                document.getElementById('lang-en').classList.add('bg-blue-100', 'text-blue-700');
+                document.getElementById('lang-en').classList.remove('text-gray-600', 'hover:text-blue-700');
+                document.getElementById('lang-en-mobile').classList.add('bg-blue-100', 'text-blue-700');
+                document.getElementById('lang-en-mobile').classList.remove('text-gray-600', 'hover:text-blue-700');
+            } else {
+                document.getElementById('lang-fr').classList.add('bg-blue-100', 'text-blue-700');
+                document.getElementById('lang-fr').classList.remove('text-gray-600', 'hover:text-blue-700');
+                document.getElementById('lang-fr-mobile').classList.add('bg-blue-100', 'text-blue-700');
+                document.getElementById('lang-fr-mobile').classList.remove('text-gray-600', 'hover:text-blue-700');
+            }
+            
+            // Update all elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            
+            // Update page title
+            document.title = lang === 'en' 
+                ? 'Complete SME IT Infrastructure | Rahim Sekkai'
+                : 'Infrastructure IT Complète PME | Rahim Sekkai';
+            
+            // Save language preference to localStorage
+            localStorage.setItem('preferredLang', lang);
+        }
+        
+        // Initialize language from localStorage or default to English
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('preferredLang') || 'en';
+            setLanguage(savedLang);
+            
+            // Add click events to language buttons
+            document.getElementById('lang-en').addEventListener('click', () => setLanguage('en'));
+            document.getElementById('lang-fr').addEventListener('click', () => setLanguage('fr'));
+            document.getElementById('lang-en-mobile').addEventListener('click', () => {
+                setLanguage('en');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            document.getElementById('lang-fr-mobile').addEventListener('click', () => {
+                setLanguage('fr');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+        
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
