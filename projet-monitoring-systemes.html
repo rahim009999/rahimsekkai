@@ -83,19 +83,77 @@
         .feature-card:hover {
             transform: translateY(-5px);
         }
-        .screenshot-placeholder {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 12px;
-            overflow: hidden;
+        /* Styles du carrousel */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .carousel-slide {
+            display: none;
+        }
+        .carousel-slide.active {
+            display: block;
+        }
+        .carousel-img {
+            width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255,255,255,0.8);
+            color: #1e40af;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        .carousel-btn:hover {
+            background-color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+        .carousel-btn.prev {
+            left: -20px;
+        }
+        .carousel-btn.next {
+            right: -20px;
+        }
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+            gap: 0.5rem;
+        }
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #d1d5db;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .carousel-dot.active {
+            background-color: #1e40af;
+            transform: scale(1.2);
         }
         @media (max-width: 768px) {
-            .config-grid {
-                grid-template-columns: 1fr;
+            .carousel-btn.prev {
+                left: 5px;
             }
-        }
-        @media (min-width: 769px) {
-            .config-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .carousel-btn.next {
+                right: 5px;
             }
         }
     </style>
@@ -234,30 +292,38 @@
                             </ul>
                         </div>
 
-                        <!-- Screenshots Section with image placeholders -->
+                        <!-- Carrousel d'images -->
                         <div class="mb-10">
                             <h3 class="text-xl font-bold text-gray-900 mb-6" data-i18n="project.screenshots">Monitoring Dashboards</h3>
-                            <div class="grid md:grid-cols-2 gap-6">
-                                <div class="screenshot-placeholder shadow-lg">
-                                    <div class="h-48 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                                        <i class="fas fa-chart-line text-white text-5xl"></i>
-                                    </div>
-                                    <div class="bg-white p-4">
-                                        <p class="font-bold text-gray-900" data-i18n="project3.screen1">Wazuh SIEM Dashboard</p>
-                                        <p class="text-sm text-gray-600" data-i18n="project3.screen1_desc">Real-time security event monitoring and alerting</p>
-                                        <!-- Replace the div above with an <img> tag once you have actual screenshots -->
-                                        <!-- <img src="/images/wazuh-dashboard.png" alt="Wazuh Dashboard" class="w-full"> -->
-                                    </div>
+                            <div class="carousel-container">
+                                <!-- Slides -->
+                                <div class="carousel-slide active">
+                                    <img src="dashboard.png" alt="Wazuh SIEM Dashboard" class="carousel-img">
+                                    <p class="text-center text-sm text-gray-600 mt-2" data-i18n="project3.screen1">Wazuh SIEM Dashboard - Real-time security event monitoring</p>
                                 </div>
-                                <div class="screenshot-placeholder shadow-lg">
-                                    <div class="h-48 bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center">
-                                        <i class="fas fa-server text-white text-5xl"></i>
-                                    </div>
-                                    <div class="bg-white p-4">
-                                        <p class="font-bold text-gray-900" data-i18n="project3.screen2">Zabbix Infrastructure Overview</p>
-                                        <p class="text-sm text-gray-600" data-i18n="project3.screen2_desc">Server and network device health metrics</p>
-                                    </div>
+                                <div class="carousel-slide">
+                                    <img src="img.png" alt="Zabbix Infrastructure Overview" class="carousel-img">
+                                    <p class="text-center text-sm text-gray-600 mt-2" data-i18n="project3.screen2">Zabbix - Server and network device health metrics</p>
                                 </div>
+                                <div class="carousel-slide">
+                                    <img src="alert-config.jpg" alt="Alert Configuration" class="carousel-img">
+                                    <p class="text-center text-sm text-gray-600 mt-2" data-i18n="project3.screen3">Alerting rules and notification settings</p>
+                                </div>
+                                <div class="carousel-slide">
+                                    <img src="network-map.jpg" alt="Network Map" class="carousel-img">
+                                    <p class="text-center text-sm text-gray-600 mt-2" data-i18n="project3.screen4">Network topology map with live status</p>
+                                </div>
+
+                                <!-- Boutons de navigation -->
+                                <button class="carousel-btn prev" onclick="changeSlide(-1)">❮</button>
+                                <button class="carousel-btn next" onclick="changeSlide(1)">❯</button>
+                            </div>
+                            <!-- Dots -->
+                            <div class="carousel-dots" id="carousel-dots">
+                                <span class="carousel-dot active" onclick="currentSlide(1)"></span>
+                                <span class="carousel-dot" onclick="currentSlide(2)"></span>
+                                <span class="carousel-dot" onclick="currentSlide(3)"></span>
+                                <span class="carousel-dot" onclick="currentSlide(4)"></span>
                             </div>
                         </div>
                     </div>
@@ -427,10 +493,10 @@
                 "project3.solution4": "Set up alerting and notification rules for critical events",
                 "project3.solution5": "Created dashboards for real-time visualization of system health",
                 
-                "project3.screen1": "Wazuh SIEM Dashboard",
-                "project3.screen1_desc": "Real-time security event monitoring and alerting",
-                "project3.screen2": "Zabbix Infrastructure Overview",
-                "project3.screen2_desc": "Server and network device health metrics",
+                "project3.screen1": "Wazuh SIEM Dashboard - Real-time security event monitoring",
+                "project3.screen2": "Zabbix - Server and network device health metrics",
+                "project3.screen3": "Alerting rules and notification settings",
+                "project3.screen4": "Network topology map with live status",
                 
                 "project3.result1": "60% reduction in unplanned downtime",
                 "project3.result2": "Early detection of 90% of potential failures",
@@ -484,10 +550,10 @@
                 "project3.solution4": "Mise en place de règles d'alerte et de notification pour les événements critiques",
                 "project3.solution5": "Création de tableaux de bord pour la visualisation en temps réel de la santé système",
                 
-                "project3.screen1": "Tableau de bord Wazuh SIEM",
-                "project3.screen1_desc": "Surveillance des événements de sécurité en temps réel et alertes",
-                "project3.screen2": "Vue d'ensemble Zabbix",
-                "project3.screen2_desc": "Métriques de santé des serveurs et équipements réseau",
+                "project3.screen1": "Tableau de bord Wazuh SIEM - Surveillance des événements de sécurité en temps réel",
+                "project3.screen2": "Zabbix - Métriques de santé des serveurs et équipements réseau",
+                "project3.screen3": "Règles d'alerte et paramètres de notification",
+                "project3.screen4": "Carte topologique réseau avec état en direct",
                 
                 "project3.result1": "60% de réduction des pannes imprévues",
                 "project3.result2": "Détection précoce de 90% des pannes potentielles",
@@ -587,7 +653,42 @@
                 document.body.style.overflow = 'auto';
             });
         });
+
+        // Carousel functionality
+        let slideIndex = 1;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.carousel-dot');
+
+        function showSlide(n) {
+            if (n > slides.length) slideIndex = 1;
+            if (n < 1) slideIndex = slides.length;
+            
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            slides[slideIndex-1].classList.add('active');
+            dots[slideIndex-1].classList.add('active');
+        }
+
+        function changeSlide(n) {
+            showSlide(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlide(slideIndex = n);
+        }
+
+        // Initialize carousel
+        showSlide(slideIndex);
+
+        // Optional: keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                changeSlide(-1);
+            } else if (e.key === 'ArrowRight') {
+                changeSlide(1);
+            }
+        });
     </script>
 </body>
 </html>
-
